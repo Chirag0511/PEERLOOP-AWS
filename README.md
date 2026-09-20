@@ -3,7 +3,7 @@
 > **Event:** Amazon Code Conquest — Hackathon (AWS Student Builder Group, VSSUT)  
 > **Challenge:** Problem Statement 01 — Skill Exchange & Community Learning  
 > **Team Size:** 2 Members  
-> **Submission Deadline:** 22 September 2026, 11:59 PM IST  
+> 
 
 ---
 
