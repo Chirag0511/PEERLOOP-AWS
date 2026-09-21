@@ -1,122 +1,215 @@
-# 🚀 PeerLoop — AI-Powered Skill Barter & Micro-Mentorship Platform
+# 🚀 PeerLoop — AI-Powered Skill Barter & Micro-Mentorship Ecosystem
 
 > **Event:** Amazon Code Conquest — Hackathon (AWS Student Builder Group, VSSUT)  
-> **Challenge:** Problem Statement 01 — Skill Exchange & Community Learning  
-> **Team Size:** 2 Members  
-> 
+> **Track:** Problem Statement 01 — Skill Exchange & Community Learning  
+> **Platform Type:** Decentralized Serverless Campus Learning Network  
+> **Cloud Provider:** Amazon Web Services (AWS)
 
 ---
 
-## 📌 1. Project Overview
+## 📌 1. Executive Summary & Problem Context
 
-Valuable student expertise across university campuses remains untapped because traditional tutoring systems suffer from:
-1. **The Double-Coincidence Problem:** Student A teaches UI Design and wants Guitar lessons; Student B teaches Guitar but wants German conversation, not UI Design.
-2. **Cold-Start & Trust Barriers:** Students hesitate to reach out to unverified strangers on campus.
-3. **Session Commitment Fatigue:** Coordinating 2-hour formal lectures fails when a student just needs 15 minutes of unblocking before a deadline.
+Valuable student expertise across university campuses remains largely locked and untapped. While thousands of students possess exceptional competencies in design, musical instruments, foreign languages, 3D CAD modeling, or engineering tools, traditional campus tutoring systems fail due to three structural bottlenecks:
 
-**PeerLoop** is a decentralized, serverless skill-barter ecosystem that unlocks holistic campus knowledge. Students trade skills 1-on-1 across **Creative Arts, Music, Foreign Languages, 3D CAD, Public Speaking, and Technology** with zero tuition fees using circular time-credits, instant 15-minute SOS flash matching, and verifiable credentials.
+1. **The Double-Coincidence of Wants Dilemma**:
+   - A student who excels in *UI/UX Design* may wish to learn *Acoustic Guitar*.
+   - A peer who teaches *Guitar* might want to prepare for *Conversational German*, not UI design.
+   - In a traditional bilateral exchange, no trade can occur unless both parties want exactly what the other teaches.
+2. **Cold-Start Hesitation & Trust Deficit**:
+   - Students hesitate to reach out to unverified peers across departments or batches due to lack of proof-of-competence and fear of wasted time.
+3. **Session Commitment Fatigue**:
+   - Coordinating formal 2-hour tutoring sessions creates heavy cognitive overhead. In reality, 80% of student blockers (such as a rendering crash, CAD mate alignment error, or syntax bug before an evaluation) require only **10 to 15 minutes of rapid peer unblocking**.
 
----
-
-## ✨ 2. Key Features
-
-- **Multi-Hop Campus Time-Credits (Karma Ledger):** Solves the barter liquidity barrier. Earn credits by mentoring; spend them to learn from anyone.
-- **15-Minute SOS Flash Mentoring Desk:** Live real-time urgent board for students blocked on bugs, render crashes, or exam doubts.
-- **Amazon Bedrock Semantic Matchmaker:** Natural language compatibility discovery powered by foundation models (Claude 3 & Titan).
-- **Interactive 1-on-1 Barter Room:** Live collaborative notes, practice drills, and countdown timer.
-- **Automated AI Session Synthesis & Proof-of-Skill Badges:** Amazon Bedrock auto-summarizes takeaways and mints verifiable digital badges with cryptographic hashes.
-- **Institutional Domain Authentication:** Restricts sign-ups to verified college accounts (`@vssut.ac.in`) via Amazon Cognito.
-- **Flexible Indian Rupee (₹) Pricing:** Allows students to offer 0-cost peer barters or optional micro-bounties (`₹99`–`₹199`).
+**PeerLoop** resolves this paradigm by engineering a holistic campus skill-barter platform built on **Amazon Web Services (AWS)**. It replaces monetary tuition with **multi-hop circular time-credits (Karma)**, matches peers through **Amazon Bedrock generative AI**, locks bounties in **intelligent automated escrow**, and awards **cryptographically verifiable 3D micro-credentials**.
 
 ---
 
-## ☁️ 3. AWS Cloud & Serverless Architecture
+## 💡 2. Core Value Proposition & System Philosophy
 
-Built 100% serverless for zero idle cost and high scalability:
+PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, deliberately moving beyond just programming languages to embrace all dimensions of university talent:
 
-| AWS Service | Role in PeerLoop |
+- **Zero-Cost Circular Economy**: Every student is both a mentor and a learner. Teaching one 15-minute micro-session grants 1 Campus Time-Credit, which can be redeemed with *any* peer on the network.
+- **Holistic Skill Parity**: Mastery in *Acoustic Guitar Barre Technique* or *Goethe B1 German Preparation* holds equal barter dignity to *PyTorch Deep Learning* or *Full-Stack Development*.
+- **Autonomous Escrow Governance**: Micro-bounties and karma credits are guarded by AWS Bedrock AI. No funds or credits are released until the solution is thoroughly audited against the student's demanded roadblock.
+
+---
+
+## 🌟 3. Detailed Feature Breakdown
+
+### 🔄 Multi-Hop Campus Karma Ledger (Time-Credits)
+- Overcomes the bilateral barter bottleneck by treating time as universal campus currency.
+- When Student A mentors Student B in Video Editing, Student A receives credit from the system.
+- Student A can immediately redeem that credit to learn SolidWorks 3D Modeling from Student C.
+- Backed by an immutable transaction ledger recording all earned, spent, and escrowed balances.
+
+### ⚡ 15-Minute SOS Flash Mentoring Desk
+- A live campus unblocking board for critical, time-sensitive academic roadblocks.
+- Whenever a student or visitor opens or refreshes the platform, the SOS board dynamically populates **8 to 10 authentic, randomized campus roadblocks** spanning engineering, creative arts, and humanities.
+- Students can broadcast an emergency request with optional ₹ micro-bounties (`₹100`–`₹200`) deposited directly into the PeerLoop Escrow.
+
+### 🤖 AWS Bedrock Solution Auditor & Escrow Guard
+- Solves the problem of fake, incomplete, or unverified claims.
+- When a mentor claims an SOS ticket and submits their resolution:
+  - **Relevance to Roadblock (30 pts)**: Verifies that the submitted answer specifically addresses the student's stated dilemma.
+  - **Technical Accuracy & Depth (30 pts)**: Evaluates diagnostic methodology, commands, parameters, and corrective actions.
+  - **Actionability & Completeness (25 pts)**: Ensures the steps can be immediately executed to remove the blocker.
+  - **Clarity & Substance (15 pts)**: Rejects dismissive one-liners (e.g., *"fixed it"* or *"check google"*).
+- **Strict Escrow Enforcement**: If the audit score is below 70%, escrow payout is **withheld**.
+- **Interactive Clarification Chatbot**: If the submission is incomplete, the AWS Bedrock Bot actively converses with the mentor, asking targeted diagnostic questions until the solution meets quality standards.
+
+### 💎 Verifiable 3D-Styled Proof-of-Skill Badges
+- Dynamic SVG micro-credentials with realistic metallic shading, radiant depth, and light-reflecting facets:
+  - **💎 Diamond Tier**: Awarded for advanced problem solving and high-bounty SOS resolutions.
+  - **🥇 Gold Tier**: Awarded for certified peer mentoring and structured barter exchanges.
+  - **🥈 Silver Tier**: Awarded for foundational peer assistance and verified workshop contributions.
+- Each badge features an immutable cryptographic verification hash (`0x7a8f...`) and issuer attribution (`AWS Student Builder Group VSSUT`), suitable for student portfolios and resumes.
+
+### 💳 Campus UPI Wallet & Dual-Currency Architecture
+- **Campus Karma Credits**: Pure 0-cost peer trade units earned through teaching.
+- **Rupee Balance (₹)**: Optional micro-bounty layer allowing students to fund urgent SOS bounties or withdraw earnings.
+- **Top-Up & Withdrawal**: Integrated mock UPI workflow allowing seamless deposits (₹100, ₹250, ₹500, ₹1000) and instant payouts to real UPI IDs or bank accounts.
+
+### 🤝 Real-Time 1-on-1 Collaboration Room
+- Low-latency interactive barter room equipped with:
+  - 15-minute synchronized countdown timer.
+  - Real-time shared practice pad & code scratchpad.
+  - Student demand context card pinned directly above the workspace.
+  - One-click AWS Bedrock solution submission and escrow claim.
+
+---
+
+## 🎨 4. Holistic Campus Skill Taxonomy
+
+PeerLoop categorizes university learning into six primary barter domains:
+
+| Category | Typical Peer Offerings & Barter Topics |
 | :--- | :--- |
-| **Amazon Bedrock** | Foundation model inference (Claude 3 / Titan) for semantic matchmaking, session synthesis, and badge evaluation. |
-| **AWS Lambda** | Event-driven compute for matchmaking logic, room orchestration, and time-credit transactions. |
-| **Amazon API Gateway** | Manages REST endpoints and bidirectional WebSockets for real-time SOS alerts. |
-| **Amazon DynamoDB** | Single-table NoSQL design storing profiles, skills, and immutable transaction ledgers with sub-10ms latency. |
-| **Amazon Cognito** | Institutional email verification (`@vssut.ac.in`) and secure JWT session handling. |
-| **AWS Amplify & CloudFront** | Edge caching, CI/CD pipeline, and global static/SSR distribution. |
-
-**Cost Model:** Operational cost for 5,000 university students is **< $10 / month** (and **$0.00** during pilot testing under AWS Free Tier).
+| **🎨 Design & Creative** | Figma UI/UX prototyping, Premiere Pro color grading, After Effects motion graphics, Blender 3D asset creation, DSLR camera lighting. |
+| **🎸 Music & Arts** | Acoustic guitar fingerstyle, barre chord technique, vocal warmups, electronic music production in FL Studio, classical music theory. |
+| **🗣️ Languages & Communication** | Conversational German (Goethe B1), Spoken French, Public Speaking, Model UN / Parliamentary Debate, Statement of Purpose (SOP) writing. |
+| **⚙️ Engineering & 3D** | SolidWorks mechanical CAD, 3D printing slicing in Cura, drone propeller aerodynamic lofting, MATLAB Simulink circuit models. |
+| **💻 Tech & Code** | PyTorch deep learning, computer vision in OpenCV, Next.js 14 full-stack apps, AWS cloud architecture, SQL query tuning. |
+| **📊 Academics & Analytics** | Econometrics panel regressions in R, linear algebra proofs, scientific report writing, statistical hypothesis testing. |
 
 ---
 
-## 🛠️ 4. Technology Stack & Dependencies
+## ☁️ 5. AWS Cloud & Serverless Architecture
 
-- **Frontend:** Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS
-- **Icons & UI:** Lucide React, clsx, tailwind-merge
-- **Cloud SDK:** `@aws-sdk/client-bedrock-runtime`, `@aws-sdk/client-dynamodb`
-- **State & Resilience:** LocalStorage reactive store with intelligent offline fallback mode
+PeerLoop is architected natively on AWS serverless infrastructure to guarantee sub-second response times, zero idle hosting costs, and high scalability across thousands of campus learners.
 
----
-
-## ⚡ 5. Setup & Running the Project
-
-### Prerequisites
-- Node.js `v18+` or `v20+` (Tested on Node `v24.x`)
-- npm `v9+` or `v10+`
-
-### Installation
-```bash
-# 1. Clone the repository
-git clone https://github.com/<your-username>/<your-repo-name>.git
-cd <your-repo-name>
-
-# 2. Install dependencies
-npm install
-
-# 3. Configure environment variables (Optional for live AWS credentials)
-cp .env.example .env.local
-
-# 4. Start development server
-npm run dev
+```
+                    ┌─────────────────────────────────────────┐
+                    │               Client Browser            │
+                    │        (Next.js 14 Modern PWA)          │
+                    └────────────────────┬────────────────────┘
+                                         │
+                   HTTPS / REST API      │     WebSockets (SOS alerts)
+                                         ▼
+                    ┌─────────────────────────────────────────┐
+                    │          Amazon API Gateway             │
+                    └────────────────────┬────────────────────┘
+                                         │
+                                         ▼
+                    ┌─────────────────────────────────────────┐
+                    │             AWS Lambda                  │
+                    │      (Microservice Execution Layer)     │
+                    └─────┬───────────────────┬───────────────┘
+                          │                   │
+         Invoke Foundation Model              │ Sub-10ms Ledger Reads/Writes
+                          ▼                   ▼
+    ┌───────────────────────────┐       ┌───────────────────────────┐
+    │       Amazon Bedrock      │       │      Amazon DynamoDB      │
+    │  - Claude 3 Haiku/Sonnet  │       │  - Student Profiles Table │
+    │  - Semantic Matchmaker    │       │  - Transaction Ledger     │
+    │  - Solution Auditor Bot   │       │  - SOS Escrow Registry    │
+    │  - Badge Minting Engine   │       │  - Proof Badges Store     │
+    └───────────────────────────┘       └───────────────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+### AWS Services Utilized:
 
-### Production Build
-```bash
-npm run build
-npm run start
+1. **Amazon Bedrock (Generative AI Engine)**:
+   - Powers the **Semantic Matchmaker**, taking free-text user inquiries and calculating complementary barter pairings using semantic embeddings and multi-attribute compatibility scoring.
+   - Powers the **Solution Auditor & Escrow Guard**, analyzing submitted technical explanations against problem demands with strict rubrics and clarification loops.
+   - Synthesizes post-session learning summaries and evaluates micro-credential eligibility.
+
+2. **Amazon DynamoDB (Single-Table NoSQL Ledger)**:
+   - Stores student profiles, active SOS problem queues, and immutable transaction histories.
+   - Leverages DynamoDB Transactions (`TransactWriteItems`) to guarantee atomicity when transferring credits/bounties from student wallets into escrow and back upon verification.
+
+3. **AWS Lambda (Serverless Compute)**:
+   - Handles stateless backend business logic, session token validation, and escrow state transitions with sub-second execution overhead.
+
+4. **Amazon API Gateway**:
+   - Manages secure REST API routes for authentication, profile querying, and session termination.
+   - Handles real-time WebSocket connections for live SOS desk updates across active campus users.
+
+5. **Amazon Cognito (Institutional Identity & Security)**:
+   - Enforces campus domain verification (`@vssut.ac.in`) to eliminate unverified external actors and ensure high trust among peers.
+   - Issues JSON Web Tokens (JWTs) for authenticated sessions and role-based access control.
+
+6. **Amazon CloudFront & AWS Amplify**:
+   - Delivers edge-cached static assets and server-rendered Next.js pages with low global latency and automatic HTTPS enforcement.
+
+---
+
+## 🔒 6. Escrow & Solution Verification State Machine
+
+PeerLoop employs an automated financial and credit escrow lifecycle to eliminate fraud:
+
+```
+[Student Posts SOS] ──> [Funds / Credit Deducted from User] ──> [Locked in Escrow Registry]
+                                                                        │
+                                                                        ▼
+                                                         [Mentor Accepts & Submits Answer]
+                                                                        │
+                                                                        ▼
+                                                        [AWS Bedrock Solution Auditor]
+                                                                        │
+                                      ┌─────────────────────────────────┴─────────────────────────────────┐
+                                      ▼                                                                   ▼
+                         [Score < 70%: REJECTED]                                             [Score ≥ 70%: APPROVED]
+                                      │                                                                   │
+                                      ▼                                                                   ▼
+                      [Bounty Withheld in Escrow]                                            [Escrow Released Instantly]
+                                      │                                                                   │
+                                      ▼                                                                   ▼
+                     [Bedrock Clarification Bot                                              [₹ Bounty Credited to Solver]
+                      Demands Remediation Steps]                                             [+1 Campus Karma Credit]
+                                      │                                                                   │
+                                      ▼                                                                   ▼
+                      [Solver Submits Clarification] ──> (Re-Audit)                          [3D Verifiable Badge Minted]
+                                                                                             [SOS Marked as 'Resolved']
 ```
 
 ---
 
-## 🔒 6. Environment Variables (`.env.example`)
+## 📊 7. University Cost & Operational Feasibility Analysis
 
-PeerLoop includes an **Intelligent Demo & Simulation Engine** so judges can evaluate the entire application out-of-the-box without requiring live AWS keys.
+Because PeerLoop utilizes a purely serverless architecture, its operational cost curve scales directly with usage rather than idle server allocations:
 
-If connecting to a live AWS account:
-```env
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-NEXT_PUBLIC_INSTITUTION_DOMAIN=vssut.ac.in
-NEXT_PUBLIC_EVENT_NAME="Amazon Code Conquest 2026"
-```
-*(Never commit actual secrets or `.env.local` to GitHub)*
-
----
-
-## 🎯 7. Key Pages & Demo Walkthrough for Judges
-
-1. **Homepage (`/`):** View campus barter stats, 3-step barter flow, instant barter matcher, and live SOS queue.
-2. **Discover & Barter (`/explore`):** Test semantic search across creative, musical, language, and technical skills with Bedrock match confidence.
-3. **15-Min SOS Queue (`/sos`):** View urgent help tickets with ₹ bounties and test **"Accept & Launch Room"**.
-4. **Peer Collaboration Room (`/room/[id]`):** Live shared practice notes + 15m timer + click **"Complete Barter & Mint Badge"** for AI synthesis.
-5. **My Profile & Ledger (`/profile`):** View verifiable digital badges, skill preferences, and the DynamoDB Rupee/Karma transaction ledger.
-6. **AWS Architecture Inspector (`/architecture`):** Dedicated judge slide deck detailing the cloud services, data flow, and cost curves.
+- **Idle Cost**: **$0.00 / month** (no virtual machines or running instances).
+- **Free Tier Utilization**: During initial deployment and hackathon evaluation, all compute, database reads/writes, and authentication fall comfortably within AWS Free Tier allowances (1M Lambda requests/month, 25 GB DynamoDB storage, 50,000 Cognito active users).
+- **Production Campus Scaling (5,000 active university students)**:
+  - AWS Lambda: ~$1.20 / month
+  - Amazon DynamoDB: ~$2.50 / month
+  - Amazon Bedrock Inference (Claude 3 Haiku for audits and matchmaking): ~$4.50 / month
+  - Amazon API Gateway & CloudFront: ~$1.00 / month
+  - **Total Operational Cost**: **< $10.00 / month** for an entire collegiate campus.
 
 ---
 
-## 🤝 8. Acknowledgments & Open-Source Credits
+## 🌍 8. Impact & Long-Term Vision
 
-- **Event:** AWS Student Builder Group VSSUT — Amazon Code Conquest 2026
-- **Framework & Libraries:** Next.js by Vercel, Tailwind CSS, Lucide Icons, AWS SDK for JavaScript v3
-- **Photography & Assets:** Unsplash open-license portrait avatars
+- **Breaking Silos**: Bridges the gap between mechanical workshops, design studios, humanities societies, and computer science laboratories.
+- **Verifiable Portfolio**: Rather than unvetted resume claims, students graduate with tamper-proof cryptographic micro-credentials proving they taught, mentored, and diagnosed real peer roadblocks.
+- **Academic Equity**: Ensures that quality 1-on-1 tutoring is accessible to all students regardless of financial background through pure skill exchange.
+
+---
+
+## 🏆 9. Hackathon Project Credits
+
+- **Event:** Amazon Code Conquest 2026 — AWS Student Builder Group, VSSUT
+- **Problem Statement:** PS-01: Skill Exchange & Community Learning
+- **Institution:** Veer Surendra Sai University of Technology (VSSUT), Burla
+- **Technology Partners:** Amazon Web Services (AWS)
