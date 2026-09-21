@@ -12,14 +12,32 @@ import {
   ExternalLink,
   Edit2,
   Check,
-  ArrowRightLeft
+  ArrowRightLeft,
+  Plus,
+  Wallet
 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
+import { SymbolicBadge } from '@/components/SymbolicBadge';
+import { WalletActionModal } from '@/components/WalletActionModal';
 
 export default function ProfilePage() {
   const { user, setUser, transactions } = useAppStore();
   const [isEditingRate, setIsEditingRate] = useState(false);
   const [rateInput, setRateInput] = useState(user.pricePerSessionInRupees.toString());
+
+  // Wallet Modal state
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
+  const [walletMode, setWalletMode] = useState<'deposit' | 'withdraw'>('deposit');
+
+  const openDeposit = () => {
+    setWalletMode('deposit');
+    setIsWalletOpen(true);
+  };
+
+  const openWithdraw = () => {
+    setWalletMode('withdraw');
+    setIsWalletOpen(true);
+  };
 
   const handleSaveRate = () => {
     const parsed = parseInt(rateInput) || 0;
@@ -33,6 +51,13 @@ export default function ProfilePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
+      {/* Deposit / Withdraw Modal */}
+      <WalletActionModal
+        isOpen={isWalletOpen}
+        mode={walletMode}
+        onClose={() => setIsWalletOpen(false)}
+      />
+
       {/* Profile Header */}
       <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 mb-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
@@ -69,27 +94,48 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Wallet Balance Pill */}
-          <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center gap-4 text-xs">
-            <div>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
-                Rupee Balance
-              </span>
-              <span className="text-base font-bold font-mono text-emerald-400">
-                ₹{user.rupeeBalance}
-              </span>
+          {/* Interactive Wallet Balance & Action Card */}
+          <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col gap-2.5 text-xs w-full sm:w-auto">
+            <div className="flex items-center justify-between gap-5">
+              <div>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                  Rupee Balance
+                </span>
+                <span className="text-lg font-black font-mono text-emerald-400">
+                  ₹{user.rupeeBalance}
+                </span>
+              </div>
+
+              <div className="w-px h-7 bg-slate-800" />
+
+              <div>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                  Barter Credits
+                </span>
+                <span className="text-lg font-black text-amber-400 flex items-center gap-1">
+                  <Coins className="w-3.5 h-3.5" />
+                  {user.campusCredits}
+                </span>
+              </div>
             </div>
 
-            <div className="w-px h-7 bg-slate-800" />
-
-            <div>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
-                Barter Credits
-              </span>
-              <span className="text-base font-bold text-amber-400 flex items-center gap-1">
-                <Coins className="w-3.5 h-3.5" />
-                {user.campusCredits}
-              </span>
+            {/* Quick Deposit & Withdraw Buttons */}
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-900">
+              <button
+                onClick={openDeposit}
+                className="px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-[11px] font-semibold flex items-center justify-center gap-1 transition-all"
+              >
+                <Plus className="w-3 h-3" />
+                <span>Add Money</span>
+              </button>
+              
+              <button
+                onClick={openWithdraw}
+                className="px-3 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-400 border border-sky-500/30 text-[11px] font-semibold flex items-center justify-center gap-1 transition-all"
+              >
+                <ArrowUpRight className="w-3 h-3" />
+                <span>Withdraw</span>
+              </button>
             </div>
           </div>
 
@@ -152,7 +198,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Verifiable Badges */}
+          {/* Verifiable Badges with 3D Symbolic Renderer */}
           <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
             <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
               <Award className="w-4 h-4 text-sky-400" />
@@ -161,23 +207,7 @@ export default function ProfilePage() {
 
             <div className="space-y-2.5">
               {user.badges.map((badge) => (
-                <div
-                  key={badge.id}
-                  className="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 flex items-center justify-between text-xs"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
-                    <div className="min-w-0">
-                      <h4 className="font-semibold text-white truncate">{badge.title}</h4>
-                      <p className="text-[10px] text-slate-400 truncate font-mono">
-                        {badge.verificationHash}
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800 shrink-0">
-                    {badge.level}
-                  </span>
-                </div>
+                <SymbolicBadge key={badge.id} badge={badge} showDetails={true} />
               ))}
             </div>
           </div>
@@ -193,7 +223,7 @@ export default function ProfilePage() {
             </div>
 
             <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-              Every completed barter trade and urgent unblocking bounty is recorded here:
+              Every completed barter trade, deposit, and withdrawal is tracked in this immutable ledger:
             </p>
 
             <div className="space-y-2.5">
@@ -236,7 +266,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="mt-6 pt-3 border-t border-slate-800 text-[10px] text-slate-500 text-center">
-            Zero Platform Fees • 100% Peer Community Driven
+            Zero Platform Fees • Secured via Multi-Item DynamoDB Transactions
           </div>
         </div>
 

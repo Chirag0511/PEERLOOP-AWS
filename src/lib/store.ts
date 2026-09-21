@@ -167,6 +167,46 @@ export function useAppStore() {
     localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(updatedTx));
   };
 
+  const depositMoney = (amount: number, method: string = 'Instant UPI') => {
+    const updatedUser = {
+      ...user,
+      rupeeBalance: user.rupeeBalance + amount
+    };
+    saveUserData(updatedUser);
+
+    const newTx: CreditTransaction = {
+      id: `tx-${Date.now()}`,
+      timestamp: 'Just now',
+      amountRupees: amount,
+      type: 'Earned',
+      description: `Added ₹${amount} via ${method}`,
+      counterpart: 'UPI / Bank Deposit'
+    };
+    const updatedTx = [newTx, ...transactions];
+    setTransactions(updatedTx);
+    localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(updatedTx));
+  };
+
+  const withdrawMoney = (amount: number, upiId: string) => {
+    const updatedUser = {
+      ...user,
+      rupeeBalance: Math.max(0, user.rupeeBalance - amount)
+    };
+    saveUserData(updatedUser);
+
+    const newTx: CreditTransaction = {
+      id: `tx-${Date.now()}`,
+      timestamp: 'Just now',
+      amountRupees: -amount,
+      type: 'Spent',
+      description: `Payout of ₹${amount} transferred to ${upiId}`,
+      counterpart: 'Bank / UPI Withdrawal'
+    };
+    const updatedTx = [newTx, ...transactions];
+    setTransactions(updatedTx);
+    localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(updatedTx));
+  };
+
   return {
     user,
     isLoggedIn,
@@ -180,6 +220,8 @@ export function useAppStore() {
     transactions,
     sessions,
     completeSessionAndAward,
+    depositMoney,
+    withdrawMoney,
     isLoaded
   };
 }
