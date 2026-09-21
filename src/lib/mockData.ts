@@ -237,9 +237,8 @@ export const MOCK_STUDENTS: Student[] = [
   }
 ];
 
-export const MOCK_SOS_REQUESTS: SOSRequest[] = [
+export const SOS_PROBLEM_POOL: Omit<SOSRequest, 'id' | 'createdAt' | 'status'>[] = [
   {
-    id: 'sos-1',
     studentId: 'usr-11',
     studentName: 'Ritika Mishra',
     studentDept: 'Computer Science (2nd Year)',
@@ -249,12 +248,9 @@ export const MOCK_SOS_REQUESTS: SOSRequest[] = [
     category: 'Design & Creative',
     urgency: 'Critical (Exam/Deadline)',
     creditsReward: 1,
-    bountyInRupees: 150,
-    createdAt: '12 minutes ago',
-    status: 'Open'
+    bountyInRupees: 150
   },
   {
-    id: 'sos-2',
     studentId: 'usr-12',
     studentName: 'Ayush Mohanty',
     studentDept: 'Electronics (3rd Year)',
@@ -264,12 +260,9 @@ export const MOCK_SOS_REQUESTS: SOSRequest[] = [
     category: 'Music & Arts',
     urgency: 'High',
     creditsReward: 1,
-    bountyInRupees: 100,
-    createdAt: '28 minutes ago',
-    status: 'Open'
+    bountyInRupees: 100
   },
   {
-    id: 'sos-3',
     studentId: 'usr-13',
     studentName: 'Kavya Sen',
     studentDept: 'Mechanical (3rd Year)',
@@ -279,11 +272,170 @@ export const MOCK_SOS_REQUESTS: SOSRequest[] = [
     category: 'Engineering & 3D',
     urgency: 'Critical (Exam/Deadline)',
     creditsReward: 2,
-    bountyInRupees: 200,
-    createdAt: '40 minutes ago',
-    status: 'Open'
+    bountyInRupees: 200
+  },
+  {
+    studentId: 'usr-14',
+    studentName: 'Saurav Jena',
+    studentDept: 'Information Technology (4th Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
+    topic: 'German B1 Speaking mock drill for Goethe Zertifikat exam',
+    description: 'Oral examination is tomorrow morning. Need someone who has cleared B1 to run a 15-min practice dialogue on Teil 2 presentation and Teil 3 partner discussion.',
+    category: 'Languages & Communication',
+    urgency: 'Critical (Exam/Deadline)',
+    creditsReward: 1,
+    bountyInRupees: 120
+  },
+  {
+    studentId: 'usr-15',
+    studentName: 'Megha Tripathy',
+    studentDept: 'CSE (3rd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+    topic: 'Python OpenCV script crashing with MemoryError on batch video frames',
+    description: 'Computer vision lab assignment: looping over 1,200 video frames causes RAM usage to spike to 100% and crashes the kernel. Need help using generator streams or frame decimation.',
+    category: 'Tech & Code',
+    urgency: 'High',
+    creditsReward: 1,
+    bountyInRupees: 100
+  },
+  {
+    studentId: 'usr-16',
+    studentName: 'Arjun Nanda',
+    studentDept: 'Civil Engineering (3rd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    topic: 'Figma responsive auto-layout collapsing nested cards on mobile resize',
+    description: 'Designing the official club recruitment website. The hero grid works on desktop, but switching to 375px mobile viewport squishes the text layers instead of wrapping. Need 10 mins of Figma help.',
+    category: 'Design & Creative',
+    urgency: 'High',
+    creditsReward: 1,
+    bountyInRupees: 100
+  },
+  {
+    studentId: 'usr-17',
+    studentName: 'Pooja Barik',
+    studentDept: 'Electrical Engineering (2nd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    topic: 'Calculus III Fourier Series convergence doubt for mid-sem exam',
+    description: 'Mid-sem exam tomorrow at 9 AM. I am stuck calculating the odd-even half range expansion coefficients (a_n and b_n) for a piecewise triangular wave. Need 15 mins to clear concept.',
+    category: 'Academics & Analytics',
+    urgency: 'Critical (Exam/Deadline)',
+    creditsReward: 1,
+    bountyInRupees: 150
+  },
+  {
+    studentId: 'usr-18',
+    studentName: 'Manish Behera',
+    studentDept: 'Mechanical (2nd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    topic: 'Public speaking speech hook & opening stance for parliamentary debate',
+    description: 'Inter-college debate finals tomorrow. My rebuttal points are solid, but my opening 45-second hook feels flat. Need a seasoned debater to listen and suggest a punchy opening line.',
+    category: 'Languages & Communication',
+    urgency: 'High',
+    creditsReward: 1,
+    bountyInRupees: 100
+  },
+  {
+    studentId: 'usr-19',
+    studentName: 'Tanvi Agarwal',
+    studentDept: 'Production Engineering (3rd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+    topic: '3D Printer Ender-3 PETG bed adhesion warping at corners',
+    description: 'Printing parts for our SAE BAJA rover. PETG is warping off the glass bed after layer 15. Tried 75°C bed temp and brim. Need 10 mins with someone experienced in 3D printing slicing.',
+    category: 'Engineering & 3D',
+    urgency: 'High',
+    creditsReward: 1,
+    bountyInRupees: 120
+  },
+  {
+    studentId: 'usr-20',
+    studentName: 'Devidutta Ray',
+    studentDept: 'Electronics (4th Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    topic: 'FL Studio audio clipping & sidechain compression pump setup',
+    description: 'Producing the background anthem for the college fest trailer. The kick and sub-bass frequencies are clashing and causing harsh digital distortion. Need 15 mins with an audio producer.',
+    category: 'Music & Arts',
+    urgency: 'Normal',
+    creditsReward: 1,
+    bountyInRupees: 100
+  },
+  {
+    studentId: 'usr-21',
+    studentName: 'Kunal Swain',
+    studentDept: 'CSE (2nd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+    topic: 'C++ Dijkstra priority_queue custom comparator syntax error',
+    description: 'Lab test tomorrow: compiling custom struct with min-heap priority_queue throws cannot be overloaded error. Need 10 mins with a DSA peer to fix the operator() comparator.',
+    category: 'Tech & Code',
+    urgency: 'Critical (Exam/Deadline)',
+    creditsReward: 1,
+    bountyInRupees: 150
+  },
+  {
+    studentId: 'usr-22',
+    studentName: 'Sonali Pradhan',
+    studentDept: 'Chemical Engineering (3rd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    topic: 'MATLAB ode45 stiff chemical reaction kinetics returning NaN',
+    description: 'Simulating a 3-step exothermic reactor system. ode45 is taking 10,000 steps and exploding with NaN values due to stiffness. Need help switching to ode15s with proper Jacobian settings.',
+    category: 'Academics & Analytics',
+    urgency: 'Critical (Exam/Deadline)',
+    creditsReward: 2,
+    bountyInRupees: 200
+  },
+  {
+    studentId: 'usr-23',
+    studentName: 'Biswajit Das',
+    studentDept: 'EEE (3rd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80',
+    topic: 'ESP32 MQTT broker disconnect loop on campus Wi-Fi network',
+    description: 'Smart energy meter hardware project: ESP32 connects to campus Wi-Fi but drops MQTT connection every 12 seconds with error -2. Need help debugging keep-alive ping intervals.',
+    category: 'Engineering & 3D',
+    urgency: 'High',
+    creditsReward: 1,
+    bountyInRupees: 140
+  },
+  {
+    studentId: 'usr-24',
+    studentName: 'Shruti Panigrahi',
+    studentDept: 'Civil (2nd Year)',
+    studentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+    topic: 'French DELF A2 oral comprehension listening & speaking practice',
+    description: 'Applying for a summer exchange program in France. Need 15 mins to practice listening comprehension and speaking response drills with a fluent French peer.',
+    category: 'Languages & Communication',
+    urgency: 'Normal',
+    creditsReward: 1,
+    bountyInRupees: 100
   }
 ];
+
+export function generateRandomSosRequests(count: number = 9): SOSRequest[] {
+  // Random time phrases
+  const times = [
+    '3 minutes ago',
+    '7 minutes ago',
+    '12 minutes ago',
+    '18 minutes ago',
+    '24 minutes ago',
+    '31 minutes ago',
+    '39 minutes ago',
+    '47 minutes ago',
+    '55 minutes ago',
+    '1 hour ago'
+  ];
+
+  // Shuffle pool (Fisher-Yates)
+  const shuffled = [...SOS_PROBLEM_POOL].sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+
+  return selected.map((item, index) => ({
+    ...item,
+    id: `sos-${Date.now()}-${index}`,
+    createdAt: times[index % times.length],
+    status: 'Open'
+  }));
+}
+
+export const MOCK_SOS_REQUESTS: SOSRequest[] = generateRandomSosRequests(9);
 
 export const MOCK_TRANSACTIONS: CreditTransaction[] = [
   {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Student, SOSRequest, CreditTransaction, ProofBadge, SessionData } from '@/types';
-import { CURRENT_USER, MOCK_STUDENTS, MOCK_SOS_REQUESTS, MOCK_TRANSACTIONS } from './mockData';
+import { CURRENT_USER, MOCK_STUDENTS, MOCK_SOS_REQUESTS, MOCK_TRANSACTIONS, generateRandomSosRequests } from './mockData';
 
 const STORAGE_KEYS = {
   USER: 'peerloop_user_v2',
@@ -20,7 +20,7 @@ export function useAppStore() {
   const [sessions, setSessions] = useState<SessionData[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load from localStorage on mount
+  // Load and randomize 8-10 SOS problems whenever app/web is opened
   useEffect(() => {
     try {
       const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
@@ -31,9 +31,25 @@ export function useAppStore() {
 
       if (savedUser) setUser(JSON.parse(savedUser));
       if (savedLoggedIn !== null) setIsLoggedIn(JSON.parse(savedLoggedIn));
-      if (savedSos) setSosList(JSON.parse(savedSos));
       if (savedTx) setTransactions(JSON.parse(savedTx));
       if (savedSessions) setSessions(JSON.parse(savedSessions));
+
+      // Randomly populate around 8-10 SOS problems on launch
+      const randomCount = Math.floor(Math.random() * 3) + 8; // Randomly 8, 9, or 10
+      const freshSos = generateRandomSosRequests(randomCount);
+
+      if (savedSos) {
+        const parsed = JSON.parse(savedSos);
+        const currentUserObj = savedUser ? JSON.parse(savedUser) : CURRENT_USER;
+        // Keep any active SOS requests created by the user at the top
+        const userCreated = parsed.filter((s: SOSRequest) => s.studentId === currentUserObj.id);
+        const combined = [...userCreated, ...freshSos];
+        setSosList(combined);
+        localStorage.setItem(STORAGE_KEYS.SOS_LIST, JSON.stringify(combined));
+      } else {
+        setSosList(freshSos);
+        localStorage.setItem(STORAGE_KEYS.SOS_LIST, JSON.stringify(freshSos));
+      }
     } catch (e) {
       console.error('Failed to load from storage:', e);
     } finally {
