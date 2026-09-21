@@ -99,3 +99,18 @@ export interface SemanticMatchResult {
   aiMatchReason: string;
   complementarySkills: string[];
 }
+
+export interface SolutionAuditResult {
+  passed: boolean;
+  score: number; // 0 to 100
+  verdict: 'APPROVED' | 'REJECTED' | 'NEEDS_CLARIFICATION';
+  feedback: string;
+  clarificationQuestion?: string;
+  criteriaScores: {
+    relevance: number; // /30
+    technicalAccuracy: number; // /30
+    completeness: number; // /25
+    clarity: number; // /15
+  };
+}
+

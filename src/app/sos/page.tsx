@@ -2,13 +2,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Zap, Plus, CheckCircle } from 'lucide-react';
+import { Zap, Plus, CheckCircle, Bot } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { SosModal } from '@/components/SosModal';
+import { AiAuditorModal } from '@/components/AiAuditorModal';
+import { SOSRequest } from '@/types';
 
 export default function SosPage() {
-  const { sosList, acceptSosRequest } = useAppStore();
+  const { sosList, acceptSosRequest, user, completeSessionAndAward, resolveSosRequest } = useAppStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [auditingSos, setAuditingSos] = useState<SOSRequest | null>(null);
   const [filterCat, setFilterCat] = useState('All');
 
   const categories = [
@@ -29,6 +32,33 @@ export default function SosPage() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       <SosModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      {/* Direct AI Auditor Modal */}
+      {auditingSos && (
+        <AiAuditorModal
+          isOpen={Boolean(auditingSos)}
+          topic={auditingSos.topic}
+          description={auditingSos.description}
+          category={auditingSos.category}
+          solutionNotes=""
+          mentorName={user.name}
+          learnerName={auditingSos.studentName}
+          bountyRupees={auditingSos.bountyInRupees}
+          onClose={() => setAuditingSos(null)}
+          onApproved={(badge) => {
+            completeSessionAndAward(
+              auditingSos.id,
+              auditingSos.topic,
+              auditingSos.bountyInRupees,
+              1,
+              badge
+            );
+            resolveSosRequest(auditingSos.id);
+            setAuditingSos(null);
+          }}
+        />
+      )}
+
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -114,19 +144,31 @@ export default function SosPage() {
                   </span>
 
                   {isOpen ? (
-                    <Link
-                      href={`/room/${req.id}`}
-                      onClick={() => acceptSosRequest(req.id)}
-                      className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
-                    >
-                      <Zap className="w-3.5 h-3.5 fill-current" />
-                      <span>Accept</span>
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setAuditingSos(req)}
+                        className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 font-bold text-xs flex items-center gap-1.5 transition-all border border-slate-700/80 shadow-sm"
+                        title="Submit your answer for AWS Bedrock audit directly"
+                      >
+                        <Bot className="w-3.5 h-3.5 text-amazon-orange" />
+                        <span>Solve & Audit</span>
+                      </button>
+
+                      <Link
+                        href={`/room/${req.id}`}
+                        onClick={() => acceptSosRequest(req.id)}
+                        className="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+                      >
+                        <Zap className="w-3.5 h-3.5 fill-current" />
+                        <span>Enter Room</span>
+                      </Link>
+                    </div>
                   ) : (
-                    <span className="text-xs text-slate-500">
-                      In Session
+                    <span className="text-xs text-slate-500 px-2.5 py-1 bg-slate-950 rounded-lg border border-slate-800 font-medium">
+                      {req.status === 'Resolved' ? 'Resolved' : 'In Session'}
                     </span>
                   )}
+
                 </div>
               </div>
             );

@@ -35,6 +35,12 @@ export default function SessionRoomPage() {
     ? matchingSos.topic
     : 'Acoustic Guitar Fingerstyle Technique & Barre Chords';
 
+  const sessionDescription = matchingSos
+    ? matchingSos.description
+    : 'Needs 15 mins with an experienced mentor to diagnose technique, check thumb placement, and resolve barre chord buzz.';
+
+  const sessionCategory = matchingSos ? matchingSos.category : 'Music & Arts';
+
   const peerName = matchingSos ? matchingSos.studentName : 'Debasish Panda';
   const sessionBounty = matchingSos ? matchingSos.bountyInRupees : 0;
 
@@ -42,19 +48,11 @@ export default function SessionRoomPage() {
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
-  // Scratchpad
-  const [workspaceContent, setWorkspaceContent] = useState(`### 1-on-1 Skill Barter Notes & Practice Plan
-Topic: ${sessionTopic}
-Peer: ${peerName}
+  // Scratchpad - initialized with problem context
+  const [workspaceContent, setWorkspaceContent] = useState(
+    `### Solution & Resolution Steps: ${sessionTopic}\nPeer Learner: ${peerName}\nDemanded Roadblock: ${sessionDescription}\n\n1. Root Cause Analysis:\n- \n\n2. Step-by-Step Practical Remediation:\n- \n\n3. Verification & Follow-up:\n- `
+  );
 
-1. Key Concepts Covered:
-   - Finger positioning on the 1st fret (barre index finger angled slightly on bone edge)
-   - Thumb placement centered behind the neck to reduce wrist tension
-   - Metronome practice: 60 BPM transition between C-Major and F-Barre
-
-2. Reciprocal Skill Exchange:
-   - Part 1 (15m): Guitar chords and posture breakdown
-   - Part 2 (15m): UI design tokens & Figma auto-layout review`);
 
   const [chatMessages, setChatMessages] = useState([
     { sender: peerName, text: `Hey ${user.name}! Ready to swap? Let's check out your hand position first.`, time: '14:02' },
@@ -138,6 +136,8 @@ Peer: ${peerName}
       <AiAuditorModal
         isOpen={isAuditorOpen}
         topic={sessionTopic}
+        description={sessionDescription}
+        category={sessionCategory}
         solutionNotes={workspaceContent}
         mentorName={user.name}
         learnerName={peerName}
@@ -190,10 +190,37 @@ Peer: ${peerName}
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-amazon-orange to-amber-500 hover:from-amazon-amber hover:to-amber-600 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95"
           >
             <Bot className="w-3.5 h-3.5" />
-            <span>Verify Solution & Claim Bounty</span>
+            <span>Submit Solution for AI Audit</span>
           </button>
         </div>
       </div>
+
+      {/* Demanded Roadblock Context Banner */}
+      <div className="mt-4 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-xl bg-amber-500/15 text-amazon-orange mt-0.5 border border-amber-500/30">
+            <Bot className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-xs font-bold text-white">Student's Demanded Problem</span>
+              <span className="text-slate-500">•</span>
+              <span className="text-xs text-amber-400 font-medium">{sessionCategory}</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed italic">
+              "{sessionDescription}"
+            </p>
+          </div>
+        </div>
+        <div className="shrink-0 flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-xs">
+          <span className="text-slate-400">Escrow Payout:</span>
+          <span className="font-mono font-bold text-emerald-400">₹{sessionBounty}</span>
+          <span className="text-[10px] text-amber-300 font-semibold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/50">
+            Audit Required (≥70%)
+          </span>
+        </div>
+      </div>
+
 
       {/* Main Workspace Split */}
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5 h-[600px]">

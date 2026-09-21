@@ -151,6 +151,20 @@ export function useAppStore() {
     return target;
   };
 
+  const resolveSosRequest = (sosId: string) => {
+    const updatedList = sosList.map((s) => {
+      if (s.id === sosId || `sos-${s.id}` === sosId) {
+        return {
+          ...s,
+          status: 'Resolved' as const
+        };
+      }
+      return s;
+    });
+    setSosList(updatedList);
+    localStorage.setItem(STORAGE_KEYS.SOS_LIST, JSON.stringify(updatedList));
+  };
+
   const completeSessionAndAward = (
     sessionId: string,
     topic: string,
@@ -158,6 +172,9 @@ export function useAppStore() {
     creditsEarned: number = 1,
     badgeAwarded?: ProofBadge
   ) => {
+    // Mark SOS resolved if applicable
+    resolveSosRequest(sessionId);
+
     // Increment rupees & credits
     const updatedUser = {
       ...user,
@@ -233,6 +250,7 @@ export function useAppStore() {
     sosList,
     addSosRequest,
     acceptSosRequest,
+    resolveSosRequest,
     transactions,
     sessions,
     completeSessionAndAward,
@@ -241,3 +259,4 @@ export function useAppStore() {
     isLoaded
   };
 }
+
