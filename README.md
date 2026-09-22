@@ -20,7 +20,7 @@ Valuable student expertise across university campuses remains largely locked and
 3. **Session Commitment Fatigue**:
    - Coordinating formal 2-hour tutoring sessions creates heavy cognitive overhead. In reality, 80% of student blockers (such as a rendering crash, CAD mate alignment error, or syntax bug before an evaluation) require only **10 to 15 minutes of rapid peer unblocking**.
 
-**PeerLoop** resolves this paradigm by engineering a holistic campus skill-barter platform built on **Amazon Web Services (AWS)**. It replaces monetary tuition with **multi-hop circular time-credits (Karma)**, matches peers through **Amazon Bedrock generative AI**, locks bounties in **intelligent automated escrow**, and awards **cryptographically verifiable 3D micro-credentials**.
+**PeerLoop** resolves this paradigm by engineering a holistic campus skill-barter platform built on **Amazon Web Services (AWS)**. It replaces traditional tutoring barriers with **multi-hop circular time-credits (Karma)**, matches peers through **Amazon Bedrock generative AI**, audits solutions in **intelligent automated escrow**, and awards **cryptographically verifiable 3D micro-credentials**.
 
 ---
 
@@ -28,24 +28,24 @@ Valuable student expertise across university campuses remains largely locked and
 
 PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, deliberately moving beyond just programming languages to embrace all dimensions of university talent:
 
-- **Zero-Cost Circular Economy**: Every student is both a mentor and a learner. Teaching one 15-minute micro-session grants 1 Campus Time-Credit, which can be redeemed with *any* peer on the network.
+- **Zero-Barrier Circular Economy**: Every student is both a mentor and a learner. Teaching one 15-minute micro-session grants 1 Campus Time-Credit, which can be redeemed with *any* peer on the network.
 - **Holistic Skill Parity**: Mastery in *Acoustic Guitar Barre Technique* or *Goethe B1 German Preparation* holds equal barter dignity to *PyTorch Deep Learning* or *Full-Stack Development*.
-- **Autonomous Escrow Governance**: Micro-bounties and karma credits are guarded by AWS Bedrock AI. No funds or credits are released until the solution is thoroughly audited against the student's demanded roadblock.
+- **Autonomous Quality Governance**: Barter settlements and Karma credits are verified by AWS Bedrock AI. No credits or micro-credentials are awarded until the solution is thoroughly audited against the student's demanded roadblock.
 
 ---
 
 ## 🌟 3. Detailed Feature Breakdown
 
 ### 🔄 Multi-Hop Campus Karma Ledger (Time-Credits)
-- Overcomes the bilateral barter bottleneck by treating time as universal campus currency.
+- Overcomes the bilateral barter bottleneck by treating time as a universal campus currency.
 - When Student A mentors Student B in Video Editing, Student A receives credit from the system.
 - Student A can immediately redeem that credit to learn SolidWorks 3D Modeling from Student C.
 - Backed by an immutable transaction ledger recording all earned, spent, and escrowed balances.
 
 ### ⚡ 15-Minute SOS Flash Mentoring Desk
 - A live campus unblocking board for critical, time-sensitive academic roadblocks.
-- Whenever a student or visitor opens or refreshes the platform, the SOS board dynamically populates **8 to 10 authentic, randomized campus roadblocks** spanning engineering, creative arts, and humanities.
-- Students can broadcast an emergency request with optional ₹ micro-bounties (`₹100`–`₹200`) deposited directly into the PeerLoop Escrow.
+- Whenever a student opens or refreshes the platform, the SOS board dynamically populates **8 to 10 authentic, randomized campus roadblocks** spanning engineering, creative arts, and humanities.
+- Students can broadcast an emergency request with staked Karma credits verified directly through the PeerLoop verification engine.
 
 ### 🤖 AWS Bedrock Solution Auditor & Escrow Guard
 - Solves the problem of fake, incomplete, or unverified claims.
@@ -54,23 +54,23 @@ PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, delib
   - **Technical Accuracy & Depth (30 pts)**: Evaluates diagnostic methodology, commands, parameters, and corrective actions.
   - **Actionability & Completeness (25 pts)**: Ensures the steps can be immediately executed to remove the blocker.
   - **Clarity & Substance (15 pts)**: Rejects dismissive one-liners (e.g., *"fixed it"* or *"check google"*).
-- **Strict Escrow Enforcement**: If the audit score is below 70%, escrow payout is **withheld**.
+- **Strict Quality Enforcement**: If the audit score is below 70%, credit award is **withheld**.
 - **Interactive Clarification Chatbot**: If the submission is incomplete, the AWS Bedrock Bot actively converses with the mentor, asking targeted diagnostic questions until the solution meets quality standards.
 
 ### 💎 Verifiable 3D-Styled Proof-of-Skill Badges
 - Dynamic SVG micro-credentials with realistic metallic shading, radiant depth, and light-reflecting facets:
-  - **💎 Diamond Tier**: Awarded for advanced problem solving and high-bounty SOS resolutions.
+  - **💎 Diamond Tier**: Awarded for advanced problem solving and complex SOS resolutions.
   - **🥇 Gold Tier**: Awarded for certified peer mentoring and structured barter exchanges.
   - **🥈 Silver Tier**: Awarded for foundational peer assistance and verified workshop contributions.
 - Each badge features an immutable cryptographic verification hash (`0x7a8f...`) and issuer attribution (`AWS Student Builder Group VSSUT`), suitable for student portfolios and resumes.
 
-### 💳 Campus UPI Wallet & Dual-Currency Architecture
-- **Campus Karma Credits**: Pure 0-cost peer trade units earned through teaching.
-- **Rupee Balance (₹)**: Optional micro-bounty layer allowing students to fund urgent SOS bounties or withdraw earnings.
-- **Top-Up & Withdrawal**: Integrated mock UPI workflow allowing seamless deposits (₹100, ₹250, ₹500, ₹1000) and instant payouts to real UPI IDs or bank accounts.
+### ⏱️ Campus Karma Ledger & Circular Credit Architecture
+- **Campus Karma Credits**: Pure zero-cost peer trade units earned through teaching and shared learning.
+- **Circular Time-Banking**: 15 minutes of teaching earns 1 time-credit, redeemable with any peer on the network.
+- **Immutable Audit Trail**: Transparent ledger recording all earned, spent, and settled credits backed by DynamoDB transactions.
 
 ### 🎯 Interactive Profile Skill Barter Management
-- **Skills I Teach (Barter Offer)**: Full CRUD control where students can add skills they can teach by specifying topic name, skill category, and proficiency level (*Beginner*, *Intermediate*, *Advanced*), or remove obsolete offerings with a single click.
+- **Skills I Teach (Barter Offer)**: Full control where students can add skills they can teach by specifying topic name, skill category, and proficiency level (*Beginner*, *Intermediate*, *Advanced*), or remove obsolete offerings with a single click.
 - **Skills I Want to Learn**: Flexible personal learning goal tracker allowing students to add and remove target competencies.
 - **State Persistence**: All modifications instantly synchronize with local and cloud student profiles across sessions.
 
@@ -84,7 +84,7 @@ PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, delib
   - 15-minute synchronized countdown timer.
   - Real-time shared practice pad & code scratchpad.
   - Student demand context card pinned directly above the workspace.
-  - One-click AWS Bedrock solution submission and escrow claim.
+  - One-click AWS Bedrock solution submission and verification claim.
 
 ---
 
@@ -105,7 +105,7 @@ PeerLoop categorizes university learning into six primary barter domains:
 
 ## ☁️ 5. AWS Cloud & Serverless Architecture
 
-PeerLoop is architected natively on AWS serverless infrastructure to guarantee sub-second response times, zero idle hosting costs, and high scalability across thousands of campus learners.
+PeerLoop is architected natively on AWS serverless infrastructure to guarantee sub-second response times, resilience, and high scalability across campus learners.
 
 ```
                     ┌─────────────────────────────────────────┐
@@ -145,10 +145,10 @@ PeerLoop is architected natively on AWS serverless infrastructure to guarantee s
 
 2. **Amazon DynamoDB (Single-Table NoSQL Ledger)**:
    - Stores student profiles, active SOS problem queues, and immutable transaction histories.
-   - Leverages DynamoDB Transactions (`TransactWriteItems`) to guarantee atomicity when transferring credits/bounties from student wallets into escrow and back upon verification.
+   - Leverages DynamoDB Transactions (`TransactWriteItems`) to guarantee atomicity when settling Karma credits between student profiles upon verification.
 
 3. **AWS Lambda (Serverless Compute)**:
-   - Handles stateless backend business logic, session token validation, and escrow state transitions with sub-second execution overhead.
+   - Handles stateless backend business logic, session token validation, and state transitions with sub-second execution overhead.
 
 4. **Amazon API Gateway**:
    - Manages secure REST API routes for authentication, profile querying, and session termination.
@@ -165,47 +165,43 @@ PeerLoop is architected natively on AWS serverless infrastructure to guarantee s
 
 ## 🔒 6. Escrow & Solution Verification State Machine
 
-PeerLoop employs an automated financial and credit escrow lifecycle to eliminate fraud:
+PeerLoop employs an automated quality verification lifecycle to guarantee academic integrity:
 
 ```
-[Student Posts SOS] ──> [Funds / Credit Deducted from User] ──> [Locked in Escrow Registry]
-                                                                        │
-                                                                        ▼
-                                                         [Mentor Accepts & Submits Answer]
-                                                                        │
-                                                                        ▼
-                                                        [AWS Bedrock Solution Auditor]
-                                                                        │
-                                      ┌─────────────────────────────────┴─────────────────────────────────┐
-                                      ▼                                                                   ▼
-                         [Score < 70%: REJECTED]                                             [Score ≥ 70%: APPROVED]
-                                      │                                                                   │
-                                      ▼                                                                   ▼
-                      [Bounty Withheld in Escrow]                                            [Escrow Released Instantly]
-                                      │                                                                   │
-                                      ▼                                                                   ▼
-                     [Bedrock Clarification Bot                                              [₹ Bounty Credited to Solver]
-                      Demands Remediation Steps]                                             [+1 Campus Karma Credit]
-                                      │                                                                   │
-                                      ▼                                                                   ▼
-                      [Solver Submits Clarification] ──> (Re-Audit)                          [3D Verifiable Badge Minted]
-                                                                                             [SOS Marked as 'Resolved']
+[Student Posts SOS] ──> [1 Karma Credit Staked] ──> [Locked in Verification Registry]
+                                                              │
+                                                              ▼
+                                               [Mentor Accepts & Submits Answer]
+                                                              │
+                                                              ▼
+                                              [AWS Bedrock Solution Auditor]
+                                                              │
+                            ┌─────────────────────────────────┴─────────────────────────────────┐
+                            ▼                                                                   ▼
+               [Score < 70%: REJECTED]                                             [Score ≥ 70%: APPROVED]
+                            │                                                                   │
+                            ▼                                                                   ▼
+            [Karma Credit Withheld]                                                [Karma Settlement Released]
+                            │                                                                   │
+                            ▼                                                                   ▼
+           [Bedrock Clarification Bot                                              [+1 Campus Karma Credit]
+            Demands Remediation Steps]                                             [Solver Balance Updated]
+                            │                                                                   │
+                            ▼                                                                   ▼
+            [Solver Submits Clarification] ──> (Re-Audit)                          [3D Verifiable Badge Minted]
+                                                                                   [SOS Marked as 'Resolved']
 ```
 
 ---
 
-## 📊 7. University Cost & Operational Feasibility Analysis
+## ⚡ 7. Serverless Scalability & Resilience Highlights
 
-Because PeerLoop utilizes a purely serverless architecture, its operational cost curve scales directly with usage rather than idle server allocations:
+PeerLoop utilizes a purely cloud-native, on-demand serverless architecture:
 
-- **Idle Cost**: **$0.00 / month** (no virtual machines or running instances).
-- **Free Tier Utilization**: During initial deployment and hackathon evaluation, all compute, database reads/writes, and authentication fall comfortably within AWS Free Tier allowances (1M Lambda requests/month, 25 GB DynamoDB storage, 50,000 Cognito active users).
-- **Production Campus Scaling (5,000 active university students)**:
-  - AWS Lambda: ~$1.20 / month
-  - Amazon DynamoDB: ~$2.50 / month
-  - Amazon Bedrock Inference (Claude 3 Haiku for audits and matchmaking): ~$4.50 / month
-  - Amazon API Gateway & CloudFront: ~$1.00 / month
-  - **Total Operational Cost**: **< $10.00 / month** for an entire collegiate campus.
+- **Sub-10ms Latency**: High-speed ledger reads and writes via Amazon DynamoDB single-table design.
+- **On-Demand Elasticity**: Serverless AWS Lambda microservices scale seamlessly during campus peak times (exam seasons and project submission deadlines) without manual server provisioning.
+- **High-Availability Edge Delivery**: Amazon CloudFront edge routing ensures snappy global performance and HTTPS security.
+- **Zero Idle Maintenance**: True event-driven cloud design with no long-running idle virtual machines or server overhead.
 
 ---
 
@@ -213,7 +209,7 @@ Because PeerLoop utilizes a purely serverless architecture, its operational cost
 
 - **Breaking Silos**: Bridges the gap between mechanical workshops, design studios, humanities societies, and computer science laboratories.
 - **Verifiable Portfolio**: Rather than unvetted resume claims, students graduate with tamper-proof cryptographic micro-credentials proving they taught, mentored, and diagnosed real peer roadblocks.
-- **Academic Equity**: Ensures that quality 1-on-1 tutoring is accessible to all students regardless of financial background through pure skill exchange.
+- **Academic Equity**: Ensures that quality 1-on-1 tutoring is accessible to all students through pure skill exchange.
 
 ---
 
