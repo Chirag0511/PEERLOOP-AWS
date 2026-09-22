@@ -69,6 +69,16 @@ PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, delib
 - **Rupee Balance (₹)**: Optional micro-bounty layer allowing students to fund urgent SOS bounties or withdraw earnings.
 - **Top-Up & Withdrawal**: Integrated mock UPI workflow allowing seamless deposits (₹100, ₹250, ₹500, ₹1000) and instant payouts to real UPI IDs or bank accounts.
 
+### 🎯 Interactive Profile Skill Barter Management
+- **Skills I Teach (Barter Offer)**: Full CRUD control where students can add skills they can teach by specifying topic name, skill category, and proficiency level (*Beginner*, *Intermediate*, *Advanced*), or remove obsolete offerings with a single click.
+- **Skills I Want to Learn**: Flexible personal learning goal tracker allowing students to add and remove target competencies.
+- **State Persistence**: All modifications instantly synchronize with local and cloud student profiles across sessions.
+
+### 🌓 Instant Dark / Light Theme Switcher
+- **User-Controlled Appearance**: Toggle effortlessly between an Amazon-inspired dark theme (`#090d16` deep navy canvas) and a modern, high-contrast light theme (`#f8fafc` clean slate canvas).
+- **Persistent Choice**: Theme selections are stored and initialized pre-render with zero screen flicker.
+- **Ubiquitous Access**: One-click toggling from the sticky navigation bar, user dropdown menu, and footer.
+
 ### 🤝 Real-Time 1-on-1 Collaboration Room
 - Low-latency interactive barter room equipped with:
   - 15-minute synchronized countdown timer.
