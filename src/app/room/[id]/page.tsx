@@ -53,7 +53,6 @@ export default function SessionRoomPage() {
     `### Solution & Resolution Steps: ${sessionTopic}\nPeer Learner: ${peerName}\nDemanded Roadblock: ${sessionDescription}\n\n1. Root Cause Analysis:\n- \n\n2. Step-by-Step Practical Remediation:\n- \n\n3. Verification & Follow-up:\n- `
   );
 
-
   const [chatMessages, setChatMessages] = useState([
     { sender: peerName, text: `Hey ${user.name}! Ready to swap? Let's check out your hand position first.`, time: '14:02' },
     { sender: user.name, text: 'Sounds great! After this I will show you how to structure the YouTube thumbnail in Figma.', time: '14:03' }
@@ -147,26 +146,26 @@ export default function SessionRoomPage() {
       />
 
       {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
           <Link
             href="/explore"
-            className="p-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white"
+            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-900 shadow-xs"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <div className="flex items-center gap-2 text-[11px] text-emerald-400 font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>Live 1-on-1 Barter Session</span>
-              <span className="text-slate-500">• with {peerName}</span>
+              <span className="text-slate-400">• with {peerName}</span>
               {sessionBounty > 0 && (
-                <span className="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+                <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                   ₹{sessionBounty} Bounty in Escrow
                 </span>
               )}
             </div>
-            <h1 className="text-base sm:text-lg font-bold text-white truncate max-w-lg mt-0.5">
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 truncate max-w-lg mt-0.5">
               {sessionTopic}
             </h1>
           </div>
@@ -174,12 +173,12 @@ export default function SessionRoomPage() {
 
         <div className="flex items-center gap-3">
           {/* Timer */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
-            <Clock className={`w-3.5 h-3.5 ${secondsLeft < 180 ? 'text-red-400 animate-pulse' : 'text-amber-400'}`} />
-            <span className="font-mono font-bold text-white">{formatTimer(secondsLeft)}</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs shadow-xs">
+            <Clock className={`w-3.5 h-3.5 ${secondsLeft < 180 ? 'text-red-500 animate-pulse' : 'text-amber-500'}`} />
+            <span className="font-mono font-bold text-slate-900">{formatTimer(secondsLeft)}</span>
             <button
               onClick={() => setIsTimerRunning(!isTimerRunning)}
-              className="text-slate-400 hover:text-white ml-1"
+              className="text-slate-400 hover:text-slate-700 ml-1"
             >
               {isTimerRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
             </button>
@@ -187,7 +186,7 @@ export default function SessionRoomPage() {
 
           <button
             onClick={handleStartAudit}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amazon-orange to-amber-500 hover:from-amazon-amber hover:to-amber-600 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amazon-orange to-amber-500 hover:from-amazon-amber hover:to-amber-600 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
           >
             <Bot className="w-3.5 h-3.5" />
             <span>Submit Solution for AI Audit</span>
@@ -196,47 +195,46 @@ export default function SessionRoomPage() {
       </div>
 
       {/* Demanded Roadblock Context Banner */}
-      <div className="mt-4 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="mt-4 p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-xl bg-amber-500/15 text-amazon-orange mt-0.5 border border-amber-500/30">
+          <div className="p-2 rounded-xl bg-amber-100 text-amazon-orange mt-0.5 border border-amber-200">
             <Bot className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-xs font-bold text-white">Student's Demanded Problem</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-xs text-amber-400 font-medium">{sessionCategory}</span>
+              <span className="text-xs font-bold text-slate-900">Student's Demanded Problem</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-xs text-amber-800 font-medium">{sessionCategory}</span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed italic">
+            <p className="text-xs text-slate-700 leading-relaxed italic">
               "{sessionDescription}"
             </p>
           </div>
         </div>
-        <div className="shrink-0 flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-xs">
-          <span className="text-slate-400">Escrow Payout:</span>
-          <span className="font-mono font-bold text-emerald-400">₹{sessionBounty}</span>
-          <span className="text-[10px] text-amber-300 font-semibold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/50">
+        <div className="shrink-0 flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 text-xs shadow-xs">
+          <span className="text-slate-500">Escrow Payout:</span>
+          <span className="font-mono font-bold text-emerald-700">₹{sessionBounty}</span>
+          <span className="text-[10px] text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
             Audit Required (≥70%)
           </span>
         </div>
       </div>
 
-
       {/* Main Workspace Split */}
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5 h-[600px]">
         
         {/* Left: Shared Notes / Practice Workspace (7 cols) */}
-        <div className="lg:col-span-7 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col overflow-hidden">
-          <div className="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
+        <div className="lg:col-span-7 rounded-2xl bg-white border border-slate-200 flex flex-col overflow-hidden shadow-sm">
+          <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs text-slate-700">
             <div className="flex items-center gap-2 font-medium">
               <FileText className="w-4 h-4 text-amazon-orange" />
               <span>Shared Barter Practice Notes & Resolution Steps</span>
             </div>
             <button
               onClick={handleCopyNotes}
-              className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-900 border border-slate-800"
+              className="flex items-center gap-1 text-[11px] text-slate-600 hover:text-slate-900 px-2 py-0.5 rounded bg-white border border-slate-200 shadow-xs"
             >
-              {isCopied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+              {isCopied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
               <span>{isCopied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
@@ -244,28 +242,31 @@ export default function SessionRoomPage() {
           <textarea
             value={workspaceContent}
             onChange={(e) => setWorkspaceContent(e.target.value)}
-            className="w-full flex-1 p-4 bg-slate-950/50 text-slate-200 text-xs leading-relaxed focus:outline-none resize-none font-sans selection:bg-slate-800"
+            className="w-full flex-1 p-4 bg-white text-slate-800 text-xs leading-relaxed focus:outline-none resize-none font-sans selection:bg-amber-100"
             placeholder="Document shared drills, takeaways, links, and action items..."
           />
         </div>
 
         {/* Right: Peer Discussion (5 cols) */}
-        <div className="lg:col-span-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col overflow-hidden">
-          <div className="px-4 py-2.5 bg-slate-950 border-b border-slate-800 text-xs font-medium text-slate-300 flex items-center justify-between">
+        <div className="lg:col-span-5 rounded-2xl bg-white border border-slate-200 flex flex-col overflow-hidden shadow-sm">
+          <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-xs font-medium text-slate-700 flex items-center justify-between">
             <span>Peer Discussion</span>
-            <span className="text-[10px] text-emerald-400">Connected</span>
+            <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Connected
+            </span>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs">
+          <div className="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs bg-slate-50/50">
             {chatMessages.map((msg, i) => {
               const isMe = msg.sender === user.name;
               return (
                 <div key={i} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                  <span className="text-[10px] text-slate-500 mb-0.5">{msg.sender}</span>
+                  <span className="text-[10px] text-slate-400 mb-0.5">{msg.sender}</span>
                   <div
-                    className={`px-3 py-2 rounded-xl max-w-[85%] leading-relaxed ${
-                      isMe ? 'bg-amazon-orange text-slate-950 font-medium' : 'bg-slate-800 text-slate-200'
+                    className={`px-3 py-2 rounded-xl max-w-[85%] leading-relaxed shadow-xs ${
+                      isMe ? 'bg-amazon-orange text-slate-950 font-medium' : 'bg-white text-slate-800 border border-slate-200'
                     }`}
                   >
                     {msg.text}
@@ -276,17 +277,17 @@ export default function SessionRoomPage() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSendMessage} className="p-2.5 bg-slate-950 border-t border-slate-800 flex gap-2">
+          <form onSubmit={handleSendMessage} className="p-2.5 bg-white border-t border-slate-200 flex gap-2">
             <input
               type="text"
               placeholder="Type a message or share a link..."
               value={newChat}
               onChange={(e) => setNewChat(e.target.value)}
-              className="flex-1 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400"
+              className="flex-1 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:bg-white focus:outline-none focus:border-amber-500"
             />
             <button
               type="submit"
-              className="p-2 rounded-lg bg-amazon-orange text-slate-950 hover:bg-amber-400 transition-colors"
+              className="p-2 rounded-lg bg-amazon-orange text-slate-950 hover:bg-amber-500 transition-colors shadow-xs"
             >
               <Send className="w-3.5 h-3.5" />
             </button>
@@ -297,15 +298,15 @@ export default function SessionRoomPage() {
 
       {/* Final AI Summary Modal with 3D Symbolic Badge */}
       {summaryData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-3xl p-6 shadow-2xl text-slate-800">
             
             <div className="text-center mb-5">
-              <div className="inline-flex p-3 rounded-2xl bg-amber-400 text-slate-950 mb-2">
+              <div className="inline-flex p-3 rounded-2xl bg-amber-100 text-amber-800 mb-2">
                 <Award className="w-6 h-6" />
               </div>
-              <h2 className="text-lg font-bold text-white">Skill Barter Verified!</h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <h2 className="text-lg font-bold text-slate-900">Skill Barter Verified!</h2>
+              <p className="text-xs text-slate-500 mt-0.5">
                 Validated by {summaryData.source} • Funds & Badge Released
               </p>
             </div>
@@ -316,14 +317,14 @@ export default function SessionRoomPage() {
             </div>
 
             {/* Overview */}
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 mb-5 leading-relaxed">
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 mb-5 leading-relaxed">
               {summaryData.overview}
             </div>
 
             <div className="flex justify-end">
               <Link
                 href="/profile"
-                className="px-5 py-2 rounded-xl bg-amazon-orange hover:bg-amber-400 text-slate-950 font-bold text-xs transition-all"
+                className="px-5 py-2.5 rounded-xl bg-amazon-orange hover:bg-amber-500 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-95"
               >
                 View in My Profile & Ledger
               </Link>

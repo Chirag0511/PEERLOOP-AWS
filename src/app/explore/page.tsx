@@ -60,10 +60,10 @@ function ExploreContent() {
       
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
           Discover Skill Barters
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-600 mt-1">
           Search for any skill you want to learn: Guitar, Video Editing, French, SolidWorks, or UI/UX.
         </p>
       </div>
@@ -73,31 +73,31 @@ function ExploreContent() {
         <div className="flex flex-col sm:flex-row gap-2.5">
           
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
             <input
               type="text"
               placeholder="What do you want to learn? (e.g., 'Acoustic guitar', 'Premiere Pro', 'German')"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500 shadow-xs"
             />
           </div>
 
           <div className="relative sm:w-64">
-            <ArrowRightLeft className="w-3.5 h-3.5 text-emerald-400 absolute left-3.5 top-3" />
+            <ArrowRightLeft className="w-3.5 h-3.5 text-emerald-600 absolute left-3.5 top-3.5" />
             <input
               type="text"
               placeholder="What you can teach (0-cost swap)"
               value={offeringQuery}
               onChange={(e) => setOfferingQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500"
+              className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-emerald-500 shadow-xs"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="px-5 py-2.5 rounded-xl bg-amazon-orange hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition-all shrink-0"
+            className="px-5 py-2.5 rounded-xl bg-amazon-orange hover:bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition-all shrink-0 shadow-xs active:scale-95"
           >
             {isLoading ? (
               <RefreshCw className="w-4 h-4 animate-spin" />
@@ -112,16 +112,16 @@ function ExploreContent() {
         </div>
 
         {/* Minimal Category Pills */}
-        <div className="flex flex-wrap gap-1 pt-1">
+        <div className="flex flex-wrap gap-1.5 pt-1">
           {categories.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs transition-all ${
                 selectedCategory === cat
-                  ? 'bg-slate-800 text-white font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-slate-900 text-white font-semibold shadow-xs'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
               }`}
             >
               {cat}
@@ -131,17 +131,17 @@ function ExploreContent() {
       </form>
 
       {/* Results Header */}
-      <div className="flex items-center justify-between text-xs text-slate-500 mb-4 pb-2 border-b border-slate-900">
+      <div className="flex items-center justify-between text-xs text-slate-500 mb-4 pb-2 border-b border-slate-200">
         <span>Showing {filteredResults.length} campus peers</span>
-        {matchSource && <span>Matched via {matchSource}</span>}
+        {matchSource && <span className="font-medium text-amber-700">Matched via {matchSource}</span>}
       </div>
 
       {/* Grid of Minimal Cards */}
       {filteredResults.length === 0 ? (
-        <div className="text-center py-16 p-8 rounded-2xl bg-slate-900/40 border border-slate-800">
-          <AlertCircle className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-          <h3 className="text-sm font-semibold text-white">No exact barter partners found</h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+        <div className="text-center py-16 p-8 rounded-2xl bg-white border border-slate-200 shadow-xs">
+          <AlertCircle className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+          <h3 className="text-sm font-semibold text-slate-900">No exact barter partners found</h3>
+          <p className="text-xs text-slate-500 mt-0.5">
             Try broader keywords like "Music", "Video", or "Languages".
           </p>
         </div>
@@ -165,7 +165,7 @@ function ExploreContent() {
 export default function ExplorePage() {
   return (
     <Suspense fallback={
-      <div className="max-w-6xl mx-auto px-4 py-20 text-center text-slate-400 text-xs">
+      <div className="max-w-6xl mx-auto px-4 py-20 text-center text-slate-500 text-xs">
         Loading Barter Discoveries...
       </div>
     }>

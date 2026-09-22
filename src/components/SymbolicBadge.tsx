@@ -84,38 +84,39 @@ export const SymbolicBadge: React.FC<SymbolicBadgeProps> = ({
   }
 
   return (
-    <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/90 hover:border-slate-700 transition-all flex items-center justify-between gap-3.5">
+    <div className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center justify-between gap-3.5 shadow-sm">
       <div className="flex items-center gap-3.5 min-w-0">
         {renderEmblem()}
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="text-xs font-bold text-white truncate">{badge.title}</h4>
+            <h4 className="text-xs font-bold text-slate-900 truncate">{badge.title}</h4>
             <span
               className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${
                 isDiamond
-                  ? 'bg-cyan-950 text-cyan-300 border-cyan-800/80'
+                  ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
                   : isGold
-                  ? 'bg-amber-950 text-amber-300 border-amber-800/80'
-                  : 'bg-slate-900 text-slate-300 border-slate-700'
+                  ? 'bg-amber-50 text-amber-800 border-amber-200'
+                  : 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
               {badge.level} Badge
             </span>
           </div>
 
-          <p className="text-[11px] text-slate-400 mt-0.5 truncate">
+          <p className="text-[11px] text-slate-500 mt-0.5 truncate">
             {badge.skill} • {badge.issuer}
           </p>
-          <p className="text-[10px] text-slate-500 font-mono mt-0.5 truncate">
+          <p className="text-[10px] text-slate-400 font-mono mt-0.5 truncate">
             Hash: {badge.verificationHash}
           </p>
         </div>
       </div>
 
-      <span className="text-[10px] text-slate-500 font-mono shrink-0">
+      <span className="text-[10px] text-slate-400 font-mono shrink-0">
         {badge.issuedAt}
       </span>
     </div>
   );
 };
 export default SymbolicBadge;
+
