@@ -14,16 +14,44 @@ import {
   Check,
   ArrowRightLeft,
   Plus,
-  Wallet
+  Wallet,
+  X,
+  BookOpen,
+  GraduationCap
 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
+import { SkillCategory, Skill } from '@/types';
 import { SymbolicBadge } from '@/components/SymbolicBadge';
 import { WalletActionModal } from '@/components/WalletActionModal';
+
+const SKILL_CATEGORIES: SkillCategory[] = [
+  'Tech & Code',
+  'Design & Creative',
+  'Engineering & 3D',
+  'Academics & Analytics',
+  'Languages & Communication',
+  'Music & Arts'
+];
+
+const SKILL_LEVELS: Array<'Beginner' | 'Intermediate' | 'Advanced'> = [
+  'Beginner',
+  'Intermediate',
+  'Advanced'
+];
 
 export default function ProfilePage() {
   const { user, setUser, transactions } = useAppStore();
   const [isEditingRate, setIsEditingRate] = useState(false);
   const [rateInput, setRateInput] = useState(user.pricePerSessionInRupees.toString());
+
+  // Skills Management state
+  const [isAddingOffered, setIsAddingOffered] = useState(false);
+  const [newOfferedName, setNewOfferedName] = useState('');
+  const [newOfferedCategory, setNewOfferedCategory] = useState<SkillCategory>('Tech & Code');
+  const [newOfferedLevel, setNewOfferedLevel] = useState<'Beginner' | 'Intermediate' | 'Advanced'>('Intermediate');
+
+  const [isAddingSeeking, setIsAddingSeeking] = useState(false);
+  const [newSeekingName, setNewSeekingName] = useState('');
 
   // Wallet Modal state
   const [isWalletOpen, setIsWalletOpen] = useState(false);
@@ -46,6 +74,65 @@ export default function ProfilePage() {
       pricePerSessionInRupees: Math.max(0, parsed)
     });
     setIsEditingRate(false);
+  };
+
+  const handleAddOfferedSkill = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = newOfferedName.trim();
+    if (!trimmed) return;
+
+    if (user.skillsOffered.some((s) => s.name.toLowerCase() === trimmed.toLowerCase())) {
+      alert('This skill is already in your teaching list!');
+      return;
+    }
+
+    const newSkill: Skill = {
+      name: trimmed,
+      category: newOfferedCategory,
+      level: newOfferedLevel,
+      endorsements: 0
+    };
+
+    setUser({
+      ...user,
+      skillsOffered: [...user.skillsOffered, newSkill]
+    });
+
+    setNewOfferedName('');
+    setIsAddingOffered(false);
+  };
+
+  const handleRemoveOfferedSkill = (skillNameToRemove: string) => {
+    setUser({
+      ...user,
+      skillsOffered: user.skillsOffered.filter((s) => s.name !== skillNameToRemove)
+    });
+  };
+
+  const handleAddSeekingSkill = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = newSeekingName.trim();
+    if (!trimmed) return;
+
+    if (user.skillsSeeking.some((s) => s.toLowerCase() === trimmed.toLowerCase())) {
+      alert('This skill is already in your learning list!');
+      return;
+    }
+
+    setUser({
+      ...user,
+      skillsSeeking: [...user.skillsSeeking, trimmed]
+    });
+
+    setNewSeekingName('');
+    setIsAddingSeeking(false);
+  };
+
+  const handleRemoveSeekingSkill = (skillNameToRemove: string) => {
+    setUser({
+      ...user,
+      skillsSeeking: user.skillsSeeking.filter((s) => s !== skillNameToRemove)
+    });
   };
 
   return (
@@ -155,46 +242,201 @@ export default function ProfilePage() {
           
           {/* Barter Preferences Card */}
           <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-            <h2 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-              <ArrowRightLeft className="w-4 h-4 text-amazon-orange" />
-              <span>My Skill Barter Preferences</span>
+            <h2 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <ArrowRightLeft className="w-4 h-4 text-amber-500" />
+                <span>My Skill Barter Preferences</span>
+              </span>
             </h2>
 
             {/* Teaches */}
-            <div className="mb-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 block mb-1.5">
-                Skills I Teach (Barter Offer):
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {user.skillsOffered.map((sk) => (
-                  <span
-                    key={sk.name}
-                    className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs border border-slate-200 flex items-center gap-1.5"
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
+                  <GraduationCap className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Skills I Teach (Barter Offer):</span>
+                </span>
+                {!isAddingOffered && (
+                  <button
+                    onClick={() => setIsAddingOffered(true)}
+                    className="text-[11px] text-amber-700 hover:text-amber-900 font-semibold flex items-center gap-1 px-2 py-0.5 rounded-md hover:bg-amber-50 border border-amber-200/80 transition-colors shadow-2xs"
                   >
-                    <span>{sk.name}</span>
-                    <span className="text-[10px] text-amber-600 font-semibold">
-                      ★ {sk.endorsements}
-                    </span>
-                  </span>
-                ))}
+                    <Plus className="w-3 h-3" />
+                    <span>Add Skill</span>
+                  </button>
+                )}
               </div>
+
+              {/* Inline Add Offered Skill Form */}
+              {isAddingOffered && (
+                <form onSubmit={handleAddOfferedSkill} className="mb-3 p-3 bg-amber-50/70 border border-amber-200 rounded-xl space-y-2.5">
+                  <div className="text-xs font-semibold text-amber-900">Add a skill you can teach</div>
+                  <div className="space-y-2">
+                    <input
+                      type="text"
+                      value={newOfferedName}
+                      onChange={(e) => setNewOfferedName(e.target.value)}
+                      placeholder="Skill name (e.g. Next.js, SolidWorks, Guitar, ML)"
+                      className="w-full text-xs px-3 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
+                      autoFocus
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-slate-600 font-medium mb-0.5">Category</label>
+                        <select
+                          value={newOfferedCategory}
+                          onChange={(e) => setNewOfferedCategory(e.target.value as SkillCategory)}
+                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
+                        >
+                          {SKILL_CATEGORIES.map((cat) => (
+                            <option key={cat} value={cat}>{cat}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-slate-600 font-medium mb-0.5">Proficiency Level</label>
+                        <select
+                          value={newOfferedLevel}
+                          onChange={(e) => setNewOfferedLevel(e.target.value as any)}
+                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
+                        >
+                          {SKILL_LEVELS.map((lvl) => (
+                            <option key={lvl} value={lvl}>{lvl}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-end gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsAddingOffered(false);
+                        setNewOfferedName('');
+                      }}
+                      className="px-2.5 py-1 text-xs text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={!newOfferedName.trim()}
+                      className="px-3 py-1 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded-lg shadow-xs transition-colors"
+                    >
+                      Add Skill
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {user.skillsOffered.length === 0 ? (
+                <div className="p-3 text-center text-xs text-slate-500 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
+                  No skills listed yet. Click "+ Add Skill" to list skills you can teach!
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-1.5">
+                  {user.skillsOffered.map((sk) => (
+                    <span
+                      key={sk.name}
+                      className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs border border-slate-200 flex items-center gap-1.5 group hover:border-slate-300 transition-all"
+                    >
+                      <span className="font-medium">{sk.name}</span>
+                      <span className="text-[10px] text-slate-500 px-1 py-0.2 rounded bg-slate-200/80">
+                        {sk.level}
+                      </span>
+                      <span className="text-[10px] text-amber-600 font-semibold">
+                        ★ {sk.endorsements}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveOfferedSkill(sk.name)}
+                        className="text-slate-400 hover:text-rose-600 p-0.5 rounded-md hover:bg-slate-200/80 transition-colors ml-0.5"
+                        title={`Remove ${sk.name}`}
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Seeking */}
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-1.5">
-                Skills I Want to Learn:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {user.skillsSeeking.map((seek) => (
-                  <span
-                    key={seek}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs border border-emerald-200"
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Skills I Want to Learn:</span>
+                </span>
+                {!isAddingSeeking && (
+                  <button
+                    onClick={() => setIsAddingSeeking(true)}
+                    className="text-[11px] text-emerald-700 hover:text-emerald-900 font-semibold flex items-center gap-1 px-2 py-0.5 rounded-md hover:bg-emerald-50 border border-emerald-200/80 transition-colors shadow-2xs"
                   >
-                    {seek}
-                  </span>
-                ))}
+                    <Plus className="w-3 h-3" />
+                    <span>Add Skill</span>
+                  </button>
+                )}
               </div>
+
+              {/* Inline Add Seeking Skill Form */}
+              {isAddingSeeking && (
+                <form onSubmit={handleAddSeekingSkill} className="mb-3 p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-2">
+                  <div className="text-xs font-semibold text-emerald-900">Add a skill you want to learn</div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newSeekingName}
+                      onChange={(e) => setNewSeekingName(e.target.value)}
+                      placeholder="Skill name (e.g. AWS Cloud, Machine Learning, UI/UX, Public Speaking)"
+                      className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-emerald-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+                      autoFocus
+                    />
+                    <button
+                      type="submit"
+                      disabled={!newSeekingName.trim()}
+                      className="px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-lg shadow-xs transition-colors shrink-0"
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsAddingSeeking(false);
+                        setNewSeekingName('');
+                      }}
+                      className="px-2.5 py-1.5 text-xs text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors shrink-0"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {user.skillsSeeking.length === 0 ? (
+                <div className="p-3 text-center text-xs text-slate-500 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
+                  No learning goals listed yet. Click "+ Add Skill" to add skills you want to learn!
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-1.5">
+                  {user.skillsSeeking.map((seek) => (
+                    <span
+                      key={seek}
+                      className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs border border-emerald-200 flex items-center gap-1.5 group hover:border-emerald-300 transition-all"
+                    >
+                      <span className="font-medium">{seek}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSeekingSkill(seek)}
+                        className="text-emerald-600 hover:text-rose-600 p-0.5 rounded-md hover:bg-emerald-100 transition-colors ml-0.5"
+                        title={`Remove ${seek}`}
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
