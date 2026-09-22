@@ -5,6 +5,13 @@
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #090d16;
+  --foreground: #f1f5f9;
+  color-scheme: dark;
 }
 
 body {
@@ -12,9 +19,10 @@ body {
   background: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Custom light scrollbars */
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -30,11 +38,30 @@ body {
   background: #94a3b8;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #090d16;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Glass panel */
 .glass-panel {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.dark .glass-panel {
+  background: rgba(17, 24, 39, 0.88) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3) !important;
 }
 
 .gradient-text {
@@ -47,4 +74,86 @@ body {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Dark Theme Global Theme Inversions */
+.dark body {
+  background-color: #090d16 !important;
+  color: #f1f5f9 !important;
+}
+
+.dark header {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  border-bottom-color: rgba(51, 65, 85, 0.5) !important;
+}
+
+.dark footer {
+  background-color: #0b1120 !important;
+  border-top-color: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+/* Card surfaces */
+.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+.dark .bg-slate-50 {
+  background-color: #090d16 !important;
+}
+
+.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+/* Borders */
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-200\/80,
+.dark .border-slate-200\/90 {
+  border-color: #1e293b !important;
+}
+
+/* Text hierarchy */
+.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+.dark .text-slate-800 {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+.dark .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Hover surfaces */
+.dark .hover\:bg-slate-50:hover {
+  background-color: #1e293b !important;
+}
+
+.dark .hover\:bg-slate-100:hover {
+  background-color: #1e293b !important;
+}
+
+/* Form controls */
+.dark input:not([type='radio']):not([type='checkbox']),
+.dark select,
+.dark textarea {
+  background-color: #111827 !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b !important;
 }

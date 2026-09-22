@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import Link from 'next/link';
 import { Layers, ShieldCheck, Heart } from 'lucide-react';
 
@@ -15,8 +16,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light">
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-amber-100 selection:text-amber-900">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const stored = localStorage.getItem('peerloop_theme');
+                if (stored === 'dark') {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.classList.remove('light');
+                } else {
+                  document.documentElement.classList.add('light');
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-amber-100 selection:text-amber-900 transition-colors duration-200">
         <Navbar />
         
         <main className="flex-1">
@@ -46,6 +65,7 @@ export default function RootLayout({
               <Link href="/explore" className="hover:text-slate-900 transition-colors">
                 Skill Directory
               </Link>
+              <ThemeToggle variant="pill" />
               <span className="text-slate-400">Built for VSSUT Campus</span>
             </div>
 

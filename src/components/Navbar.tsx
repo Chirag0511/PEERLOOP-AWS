@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Sparkles, Zap, ShieldCheck, Coins, BookOpen, Layers, LogIn, LogOut, User, ChevronDown, IndianRupee } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { LoginModal } from './LoginModal';
+import { ThemeToggle } from './ThemeToggle';
 
 interface NavbarProps {
   onOpenSosModal?: () => void;
@@ -82,9 +83,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSosModal }) => {
               })}
             </nav>
 
-            {/* Right Actions, Rupee Wallet & User Dropdown */}
-            <div className="flex items-center gap-3">
+            {/* Right Actions, Rupee Wallet, Theme Toggle & User Dropdown */}
+            <div className="flex items-center gap-2 sm:gap-3">
               
+              {/* Theme Toggle (Dark / Light) */}
+              <ThemeToggle variant="icon" />
+
               {isLoggedIn ? (
                 <>
                   {/* Indian Rupee Balance Badge */}
@@ -150,6 +154,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSosModal }) => {
                             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                             <span>Switch Student Persona</span>
                           </button>
+
+                          <div className="pt-1 mt-1 border-t border-slate-100">
+                            <ThemeToggle variant="dropdown-item" />
+                          </div>
                         </div>
 
                         <div className="pt-1 border-t border-slate-100">
