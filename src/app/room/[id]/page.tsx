@@ -49,14 +49,24 @@ export default function SessionRoomPage() {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
   // Scratchpad - initialized with problem context
+  const isSqlSession = sessionTopic.toLowerCase().includes('sql');
   const [workspaceContent, setWorkspaceContent] = useState(
-    `### Solution & Resolution Steps: ${sessionTopic}\nPeer Learner: ${peerName}\nDemanded Roadblock: ${sessionDescription}\n\n1. Root Cause Analysis:\n- \n\n2. Step-by-Step Practical Remediation:\n- \n\n3. Verification & Follow-up:\n- `
+    isSqlSession
+      ? `### SQL Query Solution: ${sessionTopic}\nPeer Learner: ${peerName}\nTable: students\n\n-- Which command is used to show the full table?\nSELECT * FROM students;\n`
+      : `### Solution & Resolution Steps: ${sessionTopic}\nPeer Learner: ${peerName}\nDemanded Roadblock: ${sessionDescription}\n\n1. Root Cause Analysis:\n- \n\n2. Step-by-Step Practical Remediation:\n- \n\n3. Verification & Follow-up:\n- `
   );
 
-  const [chatMessages, setChatMessages] = useState([
-    { sender: peerName, text: `Hey ${user.name}! Ready to swap? Let's check out your hand position first.`, time: '14:02' },
-    { sender: user.name, text: 'Sounds great! After this I will show you how to structure the YouTube thumbnail in Figma.', time: '14:03' }
-  ]);
+  const [chatMessages, setChatMessages] = useState(
+    isSqlSession
+      ? [
+          { sender: peerName, text: `Hey ${user.name}! Can you show me the SQL command to view all records and columns in the students table?`, time: '14:02' },
+          { sender: user.name, text: 'Sure! You use "SELECT * FROM students;" which uses the asterisk (*) wildcard operator.', time: '14:03' }
+        ]
+      : [
+          { sender: peerName, text: `Hey ${user.name}! Ready to swap? Let's check out your hand position first.`, time: '14:02' },
+          { sender: user.name, text: 'Sounds great! After this I will show you how to structure the YouTube thumbnail in Figma.', time: '14:03' }
+        ]
+  );
   const [newChat, setNewChat] = useState('');
   const [isCopied, setIsCopied] = useState(false);
 

@@ -249,6 +249,9 @@ EVALUATION CRITERIA:
 3. Completeness & Actionability (0-25): Can the learner immediately apply this to unblock themselves?
 4. Clarity (0-15): Is it well-explained with sufficient substance (not just a one-liner)?
 
+SPECIAL SHOWCASE RULE:
+- If the question asks which SQL command is used to show or fetch the full table, the correct command is "SELECT * FROM <table_name>;" (e.g. "SELECT * FROM students;"). If the solution provides this query, award score 95+ and set verdict to APPROVED.
+
 PASS THRESHOLD: Total score must be >= 70 to pass.
 
 Respond with ONLY valid JSON:
@@ -308,6 +311,53 @@ Respond with ONLY valid JSON:
   // 2. Intelligent Local Semantic Evaluator
   const fullText = `${solution} ${clarification}`.trim();
   const lowerText = fullText.toLowerCase();
+
+  // Special check for SQL full-table showcase question: "SELECT * FROM <table_name>"
+  const isSqlQuestion =
+    topic.toLowerCase().includes('sql') ||
+    topic.toLowerCase().includes('students') ||
+    description.toLowerCase().includes('which sql command') ||
+    description.toLowerCase().includes('students');
+
+  if (isSqlQuestion) {
+    const cleaned = lowerText.replace(/[\n\r;]+/g, ' ').replace(/\s+/g, ' ').trim();
+    // Matches SELECT * FROM <table_name> / students
+    const isSelectAll =
+      cleaned.includes('select * from students') ||
+      cleaned.includes('select * from <table_name>') ||
+      cleaned.includes('select * from table_name') ||
+      cleaned.includes('select * from student') ||
+      (cleaned.startsWith('select * from') || (cleaned.includes('select *') && cleaned.includes('from')));
+
+    if (isSelectAll) {
+      return {
+        passed: true,
+        score: 96,
+        verdict: 'APPROVED',
+        feedback: "Correct SQL query! 'SELECT * FROM students;' is the standard command used to retrieve and display the full table with all rows and all columns. The asterisk (*) wildcard operator specifies all columns without filtering.",
+        criteriaScores: {
+          relevance: 30,
+          technicalAccuracy: 30,
+          completeness: 24,
+          clarity: 12
+        }
+      };
+    } else if (cleaned.includes('select') && !cleaned.includes('*')) {
+      return {
+        passed: false,
+        score: 55,
+        verdict: 'NEEDS_CLARIFICATION',
+        feedback: "You specified the SELECT statement, but missed the wildcard operator used to retrieve all columns and all records from the table.",
+        clarificationQuestion: "Which wildcard character or symbol should you use with SELECT to display ALL columns and rows from the table?",
+        criteriaScores: {
+          relevance: 20,
+          technicalAccuracy: 15,
+          completeness: 12,
+          clarity: 8
+        }
+      };
+    }
+  }
 
   // Immediate check: Empty, trivial, or dismissive
   const dismissivePhrases = ['fixed', 'solved it', 'done', 'test', 'idk', 'google it', 'no idea', 'skip', 'asdf', 'ok'];

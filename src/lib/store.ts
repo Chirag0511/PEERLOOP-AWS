@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Student, SOSRequest, CreditTransaction, ProofBadge, SessionData } from '@/types';
-import { CURRENT_USER, MOCK_STUDENTS, MOCK_SOS_REQUESTS, MOCK_TRANSACTIONS, generateRandomSosRequests } from './mockData';
+import { CURRENT_USER, MOCK_STUDENTS, MOCK_SOS_REQUESTS, MOCK_TRANSACTIONS, generateRandomSosRequests, SHOWCASE_SQL_SOS_QUESTION } from './mockData';
 
 const STORAGE_KEYS = {
   USER: 'peerloop_user_v2',
@@ -41,9 +41,11 @@ export function useAppStore() {
       if (savedSos) {
         const parsed = JSON.parse(savedSos);
         const currentUserObj = savedUser ? JSON.parse(savedUser) : CURRENT_USER;
-        // Keep any active SOS requests created by the user at the top
+        // Keep active SOS requests created by the user
         const userCreated = parsed.filter((s: SOSRequest) => s.studentId === currentUserObj.id);
-        const combined = [...userCreated, ...freshSos];
+        const otherFresh = freshSos.filter((s: SOSRequest) => s.id !== SHOWCASE_SQL_SOS_QUESTION.id);
+        // ALWAYS keep SHOWCASE_SQL_SOS_QUESTION as the 1st question for prototype showcase
+        const combined = [SHOWCASE_SQL_SOS_QUESTION, ...userCreated, ...otherFresh];
         setSosList(combined);
         localStorage.setItem(STORAGE_KEYS.SOS_LIST, JSON.stringify(combined));
       } else {

@@ -408,6 +408,22 @@ export const SOS_PROBLEM_POOL: Omit<SOSRequest, 'id' | 'createdAt' | 'status'>[]
   }
 ];
 
+export const SHOWCASE_SQL_SOS_QUESTION: SOSRequest = {
+  id: 'sos-showcase-sql',
+  studentId: 'usr-showcase-sql',
+  studentName: 'Aditya Verma',
+  studentDept: 'Computer Science (2nd Year)',
+  studentAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+  topic: 'SQL Query: Which command is used to show the full "students" table?',
+  description: 'Table: `students`\n+----+------------------+-------------------+----------------+\n| id | name             | department        | campus_credits |\n+----+------------------+-------------------+----------------+\n| 1  | Chirag Sharma    | Computer Science  | 12             |\n| 2  | Ananya Dash      | IT                | 8              |\n| 3  | Rohan Rath       | Mechanical        | 10             |\n+----+------------------+-------------------+----------------+\n\nQuestion: Which SQL command is used to fetch and show the entire table with all rows and columns? (Answer: SELECT * FROM <table_name>)',
+  category: 'Tech & Code',
+  urgency: 'Critical (Exam/Deadline)',
+  creditsReward: 1,
+  bountyInRupees: 150,
+  createdAt: 'Just now',
+  status: 'Open'
+};
+
 export function generateRandomSosRequests(count: number = 9): SOSRequest[] {
   // Random time phrases
   const times = [
@@ -425,14 +441,18 @@ export function generateRandomSosRequests(count: number = 9): SOSRequest[] {
 
   // Shuffle pool (Fisher-Yates)
   const shuffled = [...SOS_PROBLEM_POOL].sort(() => 0.5 - Math.random());
-  const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+  // Pick count - 1 items so total includes the showcase SQL question
+  const selected = shuffled.slice(0, Math.max(1, Math.min(count - 1, shuffled.length)));
 
-  return selected.map((item, index) => ({
+  const randomList = selected.map((item, index) => ({
     ...item,
     id: `sos-${Date.now()}-${index}`,
     createdAt: times[index % times.length],
-    status: 'Open'
+    status: 'Open' as const
   }));
+
+  // ALWAYS place the SQL showcase question at the 1st position (index 0)
+  return [SHOWCASE_SQL_SOS_QUESTION, ...randomList];
 }
 
 export const MOCK_SOS_REQUESTS: SOSRequest[] = generateRandomSosRequests(9);
