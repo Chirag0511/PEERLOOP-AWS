@@ -113,25 +113,14 @@ export default function SosPage() {
         ) : (
           filteredRequests.map((req) => {
             const isOpen = req.status === 'Open';
-            const isShowcase = req.id === 'sos-showcase-sql';
 
             return (
               <div
                 key={req.id}
-                className={`p-4 sm:p-5 rounded-2xl bg-white border transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 shadow-sm hover:shadow-md ${
-                  isShowcase
-                    ? 'border-indigo-300 ring-2 ring-indigo-500/20 bg-gradient-to-br from-indigo-50/20 via-white to-white'
-                    : 'border-slate-200 hover:border-slate-300'
-                }`}
+                className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm hover:shadow-md"
               >
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center flex-wrap gap-2 mb-1.5 text-xs">
-                    {isShowcase && (
-                      <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold text-[10px] shadow-2xs flex items-center gap-1 tracking-wide">
-                        <span>★</span>
-                        <span>PROTOTYPE SHOWCASE</span>
-                      </span>
-                    )}
+                  <div className="flex items-center gap-2 mb-1 text-xs">
                     <span className="font-bold text-slate-900">{req.studentName}</span>
                     <span className="text-slate-300">•</span>
                     <span className="text-slate-500 text-[11px]">{req.studentDept}</span>
@@ -139,39 +128,16 @@ export default function SosPage() {
                     <span className="text-amber-800 bg-amber-50 text-[11px] font-medium px-2 py-0.5 rounded border border-amber-200">{req.category}</span>
                   </div>
 
-                  <h3 className="text-sm font-bold text-slate-900">
+                  <h3 className="text-sm font-bold text-slate-900 truncate">
                     {req.topic}
                   </h3>
 
-                  {isShowcase ? (
-                    <div className="mt-2.5 space-y-2">
-                      <div className="p-3 rounded-xl bg-slate-950 text-emerald-400 font-mono text-[11px] overflow-x-auto shadow-inner border border-slate-800 leading-relaxed">
-                        <div className="text-slate-400 text-[10px] font-sans font-semibold mb-1 uppercase tracking-wider flex items-center justify-between">
-                          <span>Database Table: `students`</span>
-                          <span className="text-emerald-500 text-[10px]">SQL / Relational DB</span>
-                        </div>
-                        <pre className="text-emerald-400 font-mono text-[11px] leading-tight select-all">
-{`+----+------------------+-------------------+----------------+
-| id | name             | department        | campus_credits |
-+----+------------------+-------------------+----------------+
-| 1  | Chirag Sharma    | Computer Science  | 12             |
-| 2  | Ananya Dash      | IT                | 8              |
-| 3  | Rohan Rath       | Mechanical        | 10             |
-+----+------------------+-------------------+----------------+`}
-                        </pre>
-                      </div>
-                      <p className="text-xs font-semibold text-indigo-700 bg-indigo-50/70 p-2 rounded-lg border border-indigo-200/80">
-                        Question: Which SQL command is used to fetch and display the complete table with all rows and all columns? (Answer: <code className="font-mono bg-white px-1.5 py-0.5 rounded border border-indigo-200 text-indigo-900 font-bold">SELECT * FROM students;</code>)
-                      </p>
-                    </div>
-                  ) : (
-                    <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
-                      {req.description}
-                    </p>
-                  )}
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+                    {req.description}
+                  </p>
                 </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 sm:self-center">
+                <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                   <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
                     ₹{req.bountyInRupees} Bounty
                   </span>

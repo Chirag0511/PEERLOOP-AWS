@@ -173,9 +173,9 @@ export const AiAuditorModal: React.FC<AiAuditorModalProps> = ({
           <h4 className="text-xs font-semibold text-slate-900 mb-1">
             Demanded Problem: {topic}
           </h4>
-          <div className="text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap bg-white p-3 rounded-xl border border-slate-200 mt-1.5 text-[11px] overflow-x-auto shadow-2xs">
-            {description}
-          </div>
+          <p className="text-xs text-slate-600 leading-relaxed italic">
+            "{description}"
+          </p>
         </div>
 
         {/* Main Body depending on auditStatus */}
@@ -315,11 +315,7 @@ export const AiAuditorModal: React.FC<AiAuditorModalProps> = ({
                 onChange={(e) => setSolutionText(e.target.value)}
                 rows={5}
                 className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 leading-relaxed resize-none transition-all shadow-xs"
-                placeholder={
-                  topic.toLowerCase().includes('sql')
-                    ? "Enter SQL query (e.g. SELECT * FROM students;)"
-                    : "Explain the step-by-step resolution, commands, technique adjustments, or code fix you used to solve this specific roadblock..."
-                }
+                placeholder="Explain the step-by-step resolution, commands, technique adjustments, or code fix you used to solve this specific roadblock..."
               />
             </div>
 
