@@ -114,7 +114,7 @@ export const AiAuditorModal: React.FC<AiAuditorModalProps> = ({
     id: `bdg-${Date.now()}`,
     title: `${topic.slice(0, 24)} Certified Mentor`,
     skill: topic,
-    issuer: 'AWS Student Builder Group VSSUT',
+    issuer: 'PeerLoop Verification Network',
     issuedAt: new Date().toISOString().split('T')[0],
     verificationHash:
       '0x' + Math.random().toString(16).slice(2, 10) + '...' + Math.random().toString(16).slice(2, 6),

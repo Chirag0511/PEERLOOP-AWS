@@ -164,7 +164,7 @@ export default function ProfilePage() {
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-bold text-slate-900">{user.name}</h1>
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  @vssut.ac.in Verified
+                  Verified Peer Mentor
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">

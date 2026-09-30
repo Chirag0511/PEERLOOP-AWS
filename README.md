@@ -1,8 +1,7 @@
 # 🚀 PeerLoop — AI-Powered Skill Barter & Micro-Mentorship Ecosystem
 
-> **Event:** Amazon Code Conquest — Hackathon (AWS Student Builder Group, VSSUT)  
-> **Track:** Problem Statement 01 — Skill Exchange & Community Learning  
-> **Platform Type:** Decentralized Serverless Campus Learning Network  
+> **Platform:** PeerLoop — Collaborative Peer Skill Barter & Micro-Mentorship Platform  
+> **Ecosystem:** Decentralized Serverless Learning Network  
 > **Cloud Provider:** Amazon Web Services (AWS)
 
 ---
@@ -62,7 +61,7 @@ PeerLoop is explicitly designed as a **holistic campus barter ecosystem**, delib
   - **💎 Diamond Tier**: Awarded for advanced problem solving and complex SOS resolutions.
   - **🥇 Gold Tier**: Awarded for certified peer mentoring and structured barter exchanges.
   - **🥈 Silver Tier**: Awarded for foundational peer assistance and verified workshop contributions.
-- Each badge features an immutable cryptographic verification hash (`0x7a8f...`) and issuer attribution (`AWS Student Builder Group VSSUT`), suitable for student portfolios and resumes.
+- Each badge features an immutable cryptographic verification hash (`0x7a8f...`) and issuer attribution (`PeerLoop Verification Network`), suitable for student portfolios and resumes.
 
 ### ⏱️ Campus Karma Ledger & Circular Credit Architecture
 - **Campus Karma Credits**: Pure zero-cost peer trade units earned through teaching and shared learning.
@@ -155,7 +154,7 @@ PeerLoop is architected natively on AWS serverless infrastructure to guarantee s
    - Handles real-time WebSocket connections for live SOS desk updates across active campus users.
 
 5. **Amazon Cognito (Institutional Identity & Security)**:
-   - Enforces campus domain verification (`@vssut.ac.in`) to eliminate unverified external actors and ensure high trust among peers.
+   - Enforces institutional domain verification and secure JWT credentials to eliminate unverified external actors and ensure high trust among peers.
    - Issues JSON Web Tokens (JWTs) for authenticated sessions and role-based access control.
 
 6. **Amazon CloudFront & AWS Amplify**:
@@ -213,9 +212,10 @@ PeerLoop utilizes a purely cloud-native, on-demand serverless architecture:
 
 ---
 
-## 🏆 9. Hackathon Project Credits
+## 🛠️ 9. Technology Stack & Cloud Infrastructure
 
-- **Event:** Amazon Code Conquest 2026 — AWS Student Builder Group, VSSUT
-- **Problem Statement:** PS-01: Skill Exchange & Community Learning
-- **Institution:** Veer Surendra Sai University of Technology (VSSUT), Burla
-- **Technology Partners:** Amazon Web Services (AWS)
+- **Platform:** PeerLoop — Peer Skill Barter & Micro-Mentorship Ecosystem
+- **Cloud Architecture:** Amazon Web Services (AWS Serverless)
+- **AI & Reasoning:** Amazon Bedrock (Foundation Models)
+- **Frontend & App Framework:** Next.js 14, React 18, Tailwind CSS, TypeScript
+- **State Management & UI:** Zustand, Lucide Icons

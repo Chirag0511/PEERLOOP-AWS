@@ -35,10 +35,10 @@ export const AwsInspectorModal: React.FC<AwsInspectorModalProps> = ({ isOpen, on
     },
     {
       name: 'Amazon Cognito',
-      role: 'Institutional Campus Auth & Trust',
+      role: 'Secure Identity & Access Management',
       color: 'from-emerald-500 to-teal-600',
       icon: ShieldCheck,
-      details: 'Restricts user sign-ups strictly to institutional domains (e.g., @vssut.ac.in), preventing spam, fraud, and impersonation across campus.'
+      details: 'Provides enterprise-grade user sign-up, JWT validation, and RBAC, preventing unauthorized access and spam.'
     },
     {
       name: 'AWS Amplify & Amazon CloudFront',
@@ -70,11 +70,11 @@ export const AwsInspectorModal: React.FC<AwsInspectorModalProps> = ({ isOpen, on
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
               AWS Cloud Architecture Inspector
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                Hackathon Presentation Mode
+                Production Live Topology
               </span>
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Production-ready serverless topology designed for Amazon Code Conquest
+              Production-ready serverless topology engineered for the PeerLoop platform
             </p>
           </div>
         </div>

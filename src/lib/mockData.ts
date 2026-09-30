@@ -3,7 +3,7 @@ import { Student, SOSRequest, CreditTransaction } from '@/types';
 export const CURRENT_USER: Student = {
   id: 'usr-current',
   name: 'Aman Sharma',
-  email: 'aman.sharma@vssut.ac.in',
+  email: 'aman.sharma@peerloop.edu',
   department: 'Computer Science & Engineering',
   year: '3rd Year (B.Tech)',
   avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
@@ -25,7 +25,7 @@ export const CURRENT_USER: Student = {
       id: 'bdg-1',
       title: 'Master UI/UX Peer Mentor',
       skill: 'Figma & Design Systems',
-      issuer: 'VSSUT Design & Creative Guild',
+      issuer: 'Design & Creative Guild',
       issuedAt: '2026-08-12',
       verificationHash: '0x8f2a994c...e2b1',
       level: 'Diamond'
@@ -34,7 +34,7 @@ export const CURRENT_USER: Student = {
       id: 'bdg-2',
       title: 'Top Campus Barter Contributor',
       skill: 'Peer Collaboration',
-      issuer: 'VSSUT Student Council',
+      issuer: 'Student Leadership Council',
       issuedAt: '2026-07-29',
       verificationHash: '0x3c11d87a...90bf',
       level: 'Gold'
@@ -46,7 +46,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-1',
     name: 'Sneha Patel',
-    email: 'sneha.patel@vssut.ac.in',
+    email: 'sneha.patel@peerloop.edu',
     department: 'Electrical Engineering',
     year: '3rd Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
@@ -68,7 +68,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-3',
         title: 'Master Video Editor',
         skill: 'Video Editing & Color Grading',
-        issuer: 'VSSUT Media & Film Society',
+        issuer: 'Media & Film Society',
         issuedAt: '2026-08-01',
         verificationHash: '0x49e8a01...f32c',
         level: 'Diamond'
@@ -78,7 +78,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-2',
     name: 'Debasish Panda',
-    email: 'debasish.p@vssut.ac.in',
+    email: 'debasish.p@peerloop.edu',
     department: 'Electronics & Telecommunication',
     year: '4th Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
@@ -100,7 +100,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-4',
         title: 'Resident Music Mentor',
         skill: 'Acoustic Guitar',
-        issuer: 'VSSUT Music Club',
+        issuer: 'University Music Society',
         issuedAt: '2026-06-15',
         verificationHash: '0x1b74ef2...a891',
         level: 'Diamond'
@@ -110,7 +110,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-3',
     name: 'Ananya Dash',
-    email: 'ananya.dash@vssut.ac.in',
+    email: 'ananya.dash@peerloop.edu',
     department: 'Information Technology',
     year: '3rd Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
@@ -132,7 +132,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-5',
         title: 'Language Ambassador',
         skill: 'German & Communication',
-        issuer: 'International Relations Cell VSSUT',
+        issuer: 'Global Student Exchange Cell',
         issuedAt: '2026-07-10',
         verificationHash: '0x9923da1...48bc',
         level: 'Gold'
@@ -142,7 +142,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-4',
     name: 'Rohan Rath',
-    email: 'rohan.rath@vssut.ac.in',
+    email: 'rohan.rath@peerloop.edu',
     department: 'Mechanical Engineering',
     year: '4th Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80',
@@ -164,7 +164,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-6',
         title: '3D Engineering Specialist',
         skill: 'SolidWorks & CAD',
-        issuer: 'Idea Lab VSSUT',
+        issuer: 'Advanced Robotics & Idea Lab',
         issuedAt: '2026-05-20',
         verificationHash: '0x7e83bc2...99ca',
         level: 'Diamond'
@@ -174,7 +174,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-5',
     name: 'Priya Mahapatra',
-    email: 'priya.m@vssut.ac.in',
+    email: 'priya.m@peerloop.edu',
     department: 'Information Technology',
     year: '4th Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
@@ -196,7 +196,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-7',
         title: 'Visual Arts Mentor',
         skill: 'Photography & Editing',
-        issuer: 'VSSUT Shutterbugs Club',
+        issuer: 'Visual Arts & Photography Guild',
         issuedAt: '2026-08-19',
         verificationHash: '0x55fa891...21d9',
         level: 'Gold'
@@ -206,7 +206,7 @@ export const MOCK_STUDENTS: Student[] = [
   {
     id: 'usr-6',
     name: 'Subham Sahoo',
-    email: 'subham.sahoo@vssut.ac.in',
+    email: 'subham.sahoo@peerloop.edu',
     department: 'Mechanical Engineering',
     year: '3rd Year (B.Tech)',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
@@ -228,7 +228,7 @@ export const MOCK_STUDENTS: Student[] = [
         id: 'bdg-8',
         title: 'Master Orator',
         skill: 'Debate & Public Speaking',
-        issuer: 'VSSUT Literary & Debating Society',
+        issuer: 'Literary & Debating Society',
         issuedAt: '2026-07-15',
         verificationHash: '0x88bb12c...55ea',
         level: 'Diamond'
@@ -492,6 +492,6 @@ export const MOCK_TRANSACTIONS: CreditTransaction[] = [
     amountCredits: 2,
     type: 'Welcome Bonus',
     description: 'Campus Barter Community onboarding credit (₹300 + 2 Credits)',
-    counterpart: 'VSSUT Student Council'
+    counterpart: 'Student Leadership Council'
   }
 ];

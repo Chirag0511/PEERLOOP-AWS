@@ -48,7 +48,7 @@ export default function HomePage() {
         {/* Minimal Pill */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-xs text-xs text-slate-700 mb-6 font-medium">
           <span className="w-2 h-2 rounded-full bg-amazon-orange animate-pulse" />
-          <span>VSSUT Campus Skill Barter Network</span>
+          <span>Decentralized Peer Skill Barter Network</span>
         </div>
 
         {/* Minimalist Heading */}
@@ -229,7 +229,7 @@ export default function HomePage() {
           onClick={() => setIsAwsModalOpen(true)}
           className="text-xs text-slate-500 hover:text-slate-700 inline-flex items-center gap-1.5 transition-colors"
         >
-          <span>Amazon Code Conquest 2026 • Powered by AWS Serverless & Bedrock</span>
+          <span>Explore Architecture • Powered by Serverless Cloud & Bedrock AI</span>
           <ArrowRight className="w-3 h-3" />
         </button>
       </section>

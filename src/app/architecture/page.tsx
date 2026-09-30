@@ -25,13 +25,13 @@ export default function ArchitecturePage() {
       <div className="mb-10 text-center max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800 mb-3 shadow-xs">
           <Layers className="w-3.5 h-3.5 text-amazon-orange" />
-          <span>Amazon Code Conquest 2026 • Judging & Technical Deep-Dive</span>
+          <span>System Architecture • Cloud-Native Technical Deep-Dive</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-          AWS Cloud & Serverless Architecture
+          Cloud & Serverless Architecture
         </h1>
         <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-          How PeerLoop leverages Amazon Bedrock GenAI, AWS Lambda, Amazon DynamoDB, and Cognito to build a hyper-scalable, zero-idle-cost campus ecosystem.
+          How PeerLoop leverages Foundation AI models, serverless compute, low-latency NoSQL data structures, and verified authentication to build a hyper-scalable, zero-idle-cost peer learning ecosystem.
         </p>
       </div>
 
@@ -61,7 +61,7 @@ export default function ArchitecturePage() {
               </span>
               <h3 className="font-bold text-slate-900 mt-1">AWS Amplify & Cognito</h3>
               <p className="text-slate-600 mt-1.5 leading-relaxed">
-                Next.js SSR distributed via CloudFront edge locations. Amazon Cognito enforces strict email domain validation (@vssut.ac.in).
+                Next.js SSR distributed via CloudFront edge locations. Amazon Cognito enforces verified student and peer authentication across institutions.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-200 text-[10px] text-slate-500 font-medium">

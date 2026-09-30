@@ -14,7 +14,7 @@ interface LoginModalProps {
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const { login } = useAppStore();
   const [activeTab, setActiveTab] = useState<'demo' | 'email'>('demo');
-  const [email, setEmail] = useState('student@vssut.ac.in');
+  const [email, setEmail] = useState('learner@peerloop.edu');
   const [name, setName] = useState('Ankit Verma');
   const [department, setDepartment] = useState('Computer Science & Engineering');
 
@@ -36,7 +36,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       department,
       year: '3rd Year (B.Tech)',
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-      bio: `Student at VSSUT in ${department}. Active peer learner.`,
+      bio: `Student in ${department}. Active peer learner.`,
       campusCredits: 3,
       rupeeBalance: 300,
       pricePerSessionInRupees: 149,
@@ -165,7 +165,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                University Email (@vssut.ac.in)
+                University / Academic Email
               </label>
               <input
                 type="email"
@@ -197,7 +197,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               type="submit"
               className="w-full py-3 rounded-xl bg-gradient-to-r from-amazon-orange to-amber-500 hover:from-amazon-amber hover:to-amber-600 text-slate-950 font-bold text-sm shadow-md active:scale-95 transition-all mt-4"
             >
-              Sign In to Campus PeerLoop
+              Sign In to PeerLoop
             </button>
           </form>
         )}

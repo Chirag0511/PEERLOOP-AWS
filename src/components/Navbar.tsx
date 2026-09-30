@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSosModal }) => {
     { name: 'Discover & Barter', href: '/explore', icon: Sparkles },
     { name: 'SOS 15-Min Queue', href: '/sos', icon: Zap, badge: 'Live' },
     { name: 'My Profile & Badges', href: '/profile', icon: ShieldCheck },
-    { name: 'AWS Architecture', href: '/architecture', icon: Layers, highlight: true }
+    { name: 'System Architecture', href: '/architecture', icon: Layers, highlight: true }
   ];
 
   return (
@@ -45,10 +45,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSosModal }) => {
                   <span className="font-bold text-lg tracking-tight text-slate-900 flex items-center gap-1.5">
                     Peer<span className="text-amazon-orange">Loop</span>
                     <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-                      AWS VSSUT
+                      Peer Network
                     </span>
                   </span>
-                  <span className="text-[11px] text-slate-500 font-medium">Campus Skill Barter & Mentorship</span>
+                  <span className="text-[11px] text-slate-500 font-medium">Peer Skill Barter & Mentorship</span>
                 </div>
               </Link>
             </div>

@@ -110,7 +110,7 @@ Format:
       complementary.push('Acoustic Guitar', 'Music Theory');
     } else if (hasVideo && student.skillsOffered.some((s) => s.name.includes('Video') || s.name.includes('Premiere'))) {
       score += 51;
-      reason = `${student.name} is the media lead at VSSUT and specializes in Premiere Pro video editing and color grading.`;
+      reason = `${student.name} is an experienced media lead and specializes in Premiere Pro video editing and color grading.`;
       complementary.push('Video Editing', 'Color Grading');
     } else if (hasLang && student.skillsOffered.some((s) => s.category === 'Languages & Communication')) {
       score += 50;
@@ -199,7 +199,7 @@ export async function generateSessionSummary(
       id: `bdg-${Date.now()}`,
       title: `${topic.slice(0, 24)} Barter Mentor`,
       skill: topic,
-      issuer: 'VSSUT Skill Barter Community',
+      issuer: 'PeerLoop Skill Exchange Network',
       issuedAt: new Date().toISOString().split('T')[0],
       verificationHash: hash,
       level: 'Gold'
