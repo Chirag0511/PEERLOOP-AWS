@@ -1,518 +1,578 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import {
   ShieldCheck,
-  Coins,
   Star,
   Award,
-  ArrowUpRight,
-  ArrowDownLeft,
-  CheckCircle2,
-  ExternalLink,
-  Edit2,
-  Check,
-  ArrowRightLeft,
-  Plus,
-  Wallet,
-  X,
+  GraduationCap,
+  Briefcase,
   BookOpen,
-  GraduationCap
+  Plus,
+  Trash2,
+  CheckCircle2,
+  FileCheck,
+  ExternalLink,
+  Tag,
+  Clock,
+  Sparkles,
+  Edit3
 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
-import { SkillCategory, Skill } from '@/types';
+import { SkillCategory, Qualification, WorkExperience, Certificate } from '@/types';
 import { SymbolicBadge } from '@/components/SymbolicBadge';
-import { WalletActionModal } from '@/components/WalletActionModal';
-
-const SKILL_CATEGORIES: SkillCategory[] = [
-  'Tech & Code',
-  'Design & Creative',
-  'Engineering & 3D',
-  'Academics & Analytics',
-  'Languages & Communication',
-  'Music & Arts'
-];
-
-const SKILL_LEVELS: Array<'Beginner' | 'Intermediate' | 'Advanced'> = [
-  'Beginner',
-  'Intermediate',
-  'Advanced'
-];
 
 export default function ProfilePage() {
-  const { user, setUser, transactions } = useAppStore();
-  const [isEditingRate, setIsEditingRate] = useState(false);
-  const [rateInput, setRateInput] = useState(user.pricePerSessionInRupees.toString());
+  const {
+    user,
+    setUser,
+    courses,
+    submissions,
+    addQualification,
+    removeQualification,
+    addWorkExperience,
+    removeWorkExperience,
+    addCertificate,
+    removeCertificate,
+    updateInterests
+  } = useAppStore();
 
-  // Skills Management state
-  const [isAddingOffered, setIsAddingOffered] = useState(false);
-  const [newOfferedName, setNewOfferedName] = useState('');
-  const [newOfferedCategory, setNewOfferedCategory] = useState<SkillCategory>('Tech & Code');
-  const [newOfferedLevel, setNewOfferedLevel] = useState<'Beginner' | 'Intermediate' | 'Advanced'>('Intermediate');
+  // Modals state
+  const [isAddQualOpen, setIsAddQualOpen] = useState(false);
+  const [qualDegree, setQualDegree] = useState('');
+  const [qualInstitution, setQualInstitution] = useState('');
+  const [qualYear, setQualYear] = useState('');
+  const [qualGrade, setQualGrade] = useState('');
 
-  const [isAddingSeeking, setIsAddingSeeking] = useState(false);
-  const [newSeekingName, setNewSeekingName] = useState('');
+  const [isAddExpOpen, setIsAddExpOpen] = useState(false);
+  const [expRole, setExpRole] = useState('');
+  const [expOrg, setExpOrg] = useState('');
+  const [expDuration, setExpDuration] = useState('');
+  const [expDesc, setExpDesc] = useState('');
 
-  // Wallet Modal state
-  const [isWalletOpen, setIsWalletOpen] = useState(false);
-  const [walletMode, setWalletMode] = useState<'deposit' | 'withdraw'>('deposit');
+  const [isAddCertOpen, setIsAddCertOpen] = useState(false);
+  const [certTitle, setCertTitle] = useState('');
+  const [certIssuer, setCertIssuer] = useState('');
+  const [certDate, setCertDate] = useState('');
+  const [certId, setCertId] = useState('');
 
-  const openDeposit = () => {
-    setWalletMode('deposit');
-    setIsWalletOpen(true);
-  };
+  const [newInterestInput, setNewInterestInput] = useState('');
 
-  const openWithdraw = () => {
-    setWalletMode('withdraw');
-    setIsWalletOpen(true);
-  };
-
-  const handleSaveRate = () => {
-    const parsed = parseInt(rateInput) || 0;
-    setUser({
-      ...user,
-      pricePerSessionInRupees: Math.max(0, parsed)
+  const handleAddQual = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!qualDegree.trim()) return;
+    addQualification({
+      degree: qualDegree,
+      institution: qualInstitution || 'National Institute of Technology',
+      year: qualYear || '2023 - 2027',
+      grade: qualGrade || 'First Class'
     });
-    setIsEditingRate(false);
+    setQualDegree('');
+    setQualInstitution('');
+    setQualYear('');
+    setQualGrade('');
+    setIsAddQualOpen(false);
   };
 
-  const handleAddOfferedSkill = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    const trimmed = newOfferedName.trim();
-    if (!trimmed) return;
+  const handleAddExp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!expRole.trim()) return;
+    addWorkExperience({
+      role: expRole,
+      organization: expOrg || 'Enterprise Systems Lab',
+      duration: expDuration || '2024 - 2025',
+      description: expDesc || 'Engineered scalable full-stack features and automated workflows.'
+    });
+    setExpRole('');
+    setExpOrg('');
+    setExpDuration('');
+    setExpDesc('');
+    setIsAddExpOpen(false);
+  };
 
-    if (user.skillsOffered.some((s) => s.name.toLowerCase() === trimmed.toLowerCase())) {
-      alert('This skill is already in your teaching list!');
-      return;
+  const handleAddCert = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!certTitle.trim()) return;
+    addCertificate({
+      title: certTitle,
+      issuer: certIssuer || 'National Accreditation Board',
+      date: certDate || '2026',
+      credentialId: certId || `CRED-${Date.now().toString().slice(-6)}`
+    });
+    setCertTitle('');
+    setCertIssuer('');
+    setCertDate('');
+    setCertId('');
+    setIsAddCertOpen(false);
+  };
+
+  const handleAddInterest = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newInterestInput.trim()) return;
+    if (!user.interests.includes(newInterestInput.trim())) {
+      updateInterests([...user.interests, newInterestInput.trim()]);
     }
-
-    const newSkill: Skill = {
-      name: trimmed,
-      category: newOfferedCategory,
-      level: newOfferedLevel,
-      endorsements: 0
-    };
-
-    setUser({
-      ...user,
-      skillsOffered: [...user.skillsOffered, newSkill]
-    });
-
-    setNewOfferedName('');
-    setIsAddingOffered(false);
+    setNewInterestInput('');
   };
 
-  const handleRemoveOfferedSkill = (skillNameToRemove: string) => {
-    setUser({
-      ...user,
-      skillsOffered: user.skillsOffered.filter((s) => s.name !== skillNameToRemove)
-    });
+  const handleRemoveInterest = (interest: string) => {
+    updateInterests(user.interests.filter((i) => i !== interest));
   };
 
-  const handleAddSeekingSkill = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    const trimmed = newSeekingName.trim();
-    if (!trimmed) return;
-
-    if (user.skillsSeeking.some((s) => s.toLowerCase() === trimmed.toLowerCase())) {
-      alert('This skill is already in your learning list!');
-      return;
-    }
-
-    setUser({
-      ...user,
-      skillsSeeking: [...user.skillsSeeking, trimmed]
-    });
-
-    setNewSeekingName('');
-    setIsAddingSeeking(false);
-  };
-
-  const handleRemoveSeekingSkill = (skillNameToRemove: string) => {
-    setUser({
-      ...user,
-      skillsSeeking: user.skillsSeeking.filter((s) => s !== skillNameToRemove)
-    });
-  };
+  const userEnrolledCourses = courses.filter((c) => user.enrolledCourseIds.includes(c.id));
+  const userSubmissions = submissions.filter((s) => s.traineeId === user.id);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      
-      {/* Deposit / Withdraw Modal */}
-      <WalletActionModal
-        isOpen={isWalletOpen}
-        mode={walletMode}
-        onClose={() => setIsWalletOpen(false)}
-      />
-
-      {/* Profile Header */}
-      <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm mb-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-          
-          {/* Identity */}
-          <div className="flex items-center gap-4">
-            <div className="relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        
+        {/* Profile Hero Card */}
+        <div className="p-6 md:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+            <div className="flex items-center gap-5">
               <img
                 src={user.avatar}
                 alt={user.name}
-                className="w-16 h-16 rounded-2xl object-cover ring-2 ring-slate-100 shadow-xs"
+                className="w-20 h-20 md:w-24 md:h-24 rounded-3xl object-cover ring-4 ring-amber-400/80 shadow-md"
               />
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white" />
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h1 className="text-2xl font-black text-slate-900 dark:text-white">
+                    {user.name}
+                  </h1>
+                  <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700">
+                    Role: {user.role.toUpperCase()}
+                  </span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                    Status: {user.status}
+                  </span>
+                </div>
+
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  {user.email} • {user.organization || 'Institutional Capacity Mission'}
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 max-w-xl">
+                  {user.bio}
+                </p>
+              </div>
             </div>
 
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold text-slate-900">{user.name}</h1>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Verified Peer Mentor
-                </span>
+            {/* Trainee Stats Pill */}
+            <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shrink-0">
+              <div className="text-center">
+                <span className="text-[10px] text-slate-400 font-bold uppercase block">Enrolled Courses</span>
+                <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{user.enrolledCourseIds.length}</span>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {user.department} • {user.year}
-              </p>
-              <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
-                <span className="flex items-center gap-1 text-amber-500 font-semibold">
-                  <Star className="w-3.5 h-3.5 fill-current" />
-                  {user.rating} Rating
-                </span>
-                <span>•</span>
-                <span>{user.totalSessions} Barters Completed</span>
+              <div className="w-px h-8 bg-slate-200 dark:bg-slate-700"></div>
+              <div className="text-center">
+                <span className="text-[10px] text-slate-400 font-bold uppercase block">Certifications</span>
+                <span className="text-xl font-black text-amber-500 font-mono">{user.certificates.length}</span>
+              </div>
+              <div className="w-px h-8 bg-slate-200 dark:bg-slate-700"></div>
+              <div className="text-center">
+                <span className="text-[10px] text-slate-400 font-bold uppercase block">Assessments</span>
+                <span className="text-xl font-black text-emerald-500 font-mono">{userSubmissions.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 1: QUALIFICATIONS & WORK EXPERIENCE */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Qualifications */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-amber-500" />
+                  Academic Qualifications ({user.qualifications.length})
+                </h3>
+                <button
+                  onClick={() => setIsAddQualOpen(true)}
+                  className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Degree</span>
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {user.qualifications.map((q) => (
+                  <div
+                    key={q.id}
+                    className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-xs flex items-start justify-between gap-3"
+                  >
+                    <div>
+                      <p className="font-bold text-slate-900 dark:text-white">{q.degree}</p>
+                      <p className="text-[11px] text-slate-500">{q.institution}</p>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-400 mt-1">
+                        <span>{q.year}</span>
+                        {q.grade && (
+                          <>
+                            <span>•</span>
+                            <span className="font-semibold text-emerald-600 dark:text-emerald-400">{q.grade}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeQualification(q.id)}
+                      className="text-slate-400 hover:text-rose-500 p-1"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Interactive Wallet Balance & Action Card */}
-          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2.5 text-xs w-full sm:w-auto shadow-xs">
-            <div className="flex items-center justify-between gap-6">
-              <div>
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">
-                  Rupee Balance
-                </span>
-                <span className="text-xl font-black font-mono text-emerald-700">
-                  ₹{user.rupeeBalance}
-                </span>
+          {/* Work Experience */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <Briefcase className="w-5 h-5 text-indigo-500" />
+                  Work Experience & Internships ({user.workExperience.length})
+                </h3>
+                <button
+                  onClick={() => setIsAddExpOpen(true)}
+                  className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Experience</span>
+                </button>
               </div>
 
-              <div className="w-px h-8 bg-slate-200" />
-
-              <div>
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">
-                  Barter Credits
-                </span>
-                <span className="text-xl font-black text-amber-700 flex items-center gap-1">
-                  <Coins className="w-4 h-4 text-amber-500" />
-                  {user.campusCredits}
-                </span>
+              <div className="space-y-3">
+                {user.workExperience.length === 0 ? (
+                  <p className="text-xs text-slate-400 italic">No professional work experience listed yet.</p>
+                ) : (
+                  user.workExperience.map((we) => (
+                    <div
+                      key={we.id}
+                      className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-xs flex items-start justify-between gap-3"
+                    >
+                      <div>
+                        <p className="font-bold text-slate-900 dark:text-white">{we.role}</p>
+                        <p className="text-[11px] text-slate-500">{we.organization} • {we.duration}</p>
+                        <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">{we.description}</p>
+                      </div>
+                      <button
+                        onClick={() => removeWorkExperience(we.id)}
+                        className="text-slate-400 hover:text-rose-500 p-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))
+                )}
               </div>
-            </div>
-
-            {/* Quick Deposit & Withdraw Buttons */}
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
-              <button
-                onClick={openDeposit}
-                className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[11px] font-semibold flex items-center justify-center gap-1 transition-all shadow-xs"
-              >
-                <Plus className="w-3 h-3" />
-                <span>Add Money</span>
-              </button>
-              
-              <button
-                onClick={openWithdraw}
-                className="px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-[11px] font-semibold flex items-center justify-center gap-1 transition-all shadow-xs"
-              >
-                <ArrowUpRight className="w-3 h-3" />
-                <span>Withdraw</span>
-              </button>
             </div>
           </div>
 
         </div>
 
-        {/* Bio */}
-        <p className="text-xs text-slate-600 mt-4 pt-4 border-t border-slate-100 leading-relaxed">
-          {user.bio}
-        </p>
-      </div>
-
-      {/* Grid: 2 Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        {/* Left Column: Skills & Badges */}
-        <div className="space-y-6">
+        {/* SECTION 2: INTERESTS & SKILLS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
-          {/* Barter Preferences Card */}
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-            <h2 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <ArrowRightLeft className="w-4 h-4 text-amber-500" />
-                <span>My Skill Barter Preferences</span>
-              </span>
-            </h2>
+          {/* Interests & Learning Goals */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+              <Tag className="w-5 h-5 text-amber-500" />
+              Trainee Interests & Target Competencies
+            </h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Add your learning goals to receive tailored recommendations from the competency mapping engine.
+            </p>
 
-            {/* Teaches */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
-                  <GraduationCap className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Skills I Teach (Barter Offer):</span>
-                </span>
-                {!isAddingOffered && (
+            <form onSubmit={handleAddInterest} className="flex gap-2 mb-4">
+              <input
+                type="text"
+                placeholder="e.g. Distributed Consensus, Bedrock RAG, Quantum..."
+                value={newInterestInput}
+                onChange={(e) => setNewInterestInput(e.target.value)}
+                className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+              />
+              <button
+                type="submit"
+                className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs shadow-xs"
+              >
+                Add
+              </button>
+            </form>
+
+            <div className="flex flex-wrap gap-2">
+              {user.interests.map((interest) => (
+                <span
+                  key={interest}
+                  className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5"
+                >
+                  <span>{interest}</span>
                   <button
-                    onClick={() => setIsAddingOffered(true)}
-                    className="text-[11px] text-amber-700 hover:text-amber-900 font-semibold flex items-center gap-1 px-2 py-0.5 rounded-md hover:bg-amber-50 border border-amber-200/80 transition-colors shadow-2xs"
+                    onClick={() => handleRemoveInterest(interest)}
+                    className="text-slate-400 hover:text-rose-500"
                   >
-                    <Plus className="w-3 h-3" />
-                    <span>Add Skill</span>
+                    ×
                   </button>
-                )}
-              </div>
-
-              {/* Inline Add Offered Skill Form */}
-              {isAddingOffered && (
-                <form onSubmit={handleAddOfferedSkill} className="mb-3 p-3 bg-amber-50/70 border border-amber-200 rounded-xl space-y-2.5">
-                  <div className="text-xs font-semibold text-amber-900">Add a skill you can teach</div>
-                  <div className="space-y-2">
-                    <input
-                      type="text"
-                      value={newOfferedName}
-                      onChange={(e) => setNewOfferedName(e.target.value)}
-                      placeholder="Skill name (e.g. Next.js, SolidWorks, Guitar, ML)"
-                      className="w-full text-xs px-3 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-                      autoFocus
-                    />
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <label className="block text-[10px] text-slate-600 font-medium mb-0.5">Category</label>
-                        <select
-                          value={newOfferedCategory}
-                          onChange={(e) => setNewOfferedCategory(e.target.value as SkillCategory)}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-                        >
-                          {SKILL_CATEGORIES.map((cat) => (
-                            <option key={cat} value={cat}>{cat}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] text-slate-600 font-medium mb-0.5">Proficiency Level</label>
-                        <select
-                          value={newOfferedLevel}
-                          onChange={(e) => setNewOfferedLevel(e.target.value as any)}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-amber-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-                        >
-                          {SKILL_LEVELS.map((lvl) => (
-                            <option key={lvl} value={lvl}>{lvl}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-end gap-2 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsAddingOffered(false);
-                        setNewOfferedName('');
-                      }}
-                      className="px-2.5 py-1 text-xs text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={!newOfferedName.trim()}
-                      className="px-3 py-1 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded-lg shadow-xs transition-colors"
-                    >
-                      Add Skill
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {user.skillsOffered.length === 0 ? (
-                <div className="p-3 text-center text-xs text-slate-500 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-                  No skills listed yet. Click "+ Add Skill" to list skills you can teach!
-                </div>
-              ) : (
-                <div className="flex flex-wrap gap-1.5">
-                  {user.skillsOffered.map((sk) => (
-                    <span
-                      key={sk.name}
-                      className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs border border-slate-200 flex items-center gap-1.5 group hover:border-slate-300 transition-all"
-                    >
-                      <span className="font-medium">{sk.name}</span>
-                      <span className="text-[10px] text-slate-500 px-1 py-0.2 rounded bg-slate-200/80">
-                        {sk.level}
-                      </span>
-                      <span className="text-[10px] text-amber-600 font-semibold">
-                        ★ {sk.endorsements}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveOfferedSkill(sk.name)}
-                        className="text-slate-400 hover:text-rose-600 p-0.5 rounded-md hover:bg-slate-200/80 transition-colors ml-0.5"
-                        title={`Remove ${sk.name}`}
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Seeking */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
-                  <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Skills I Want to Learn:</span>
                 </span>
-                {!isAddingSeeking && (
-                  <button
-                    onClick={() => setIsAddingSeeking(true)}
-                    className="text-[11px] text-emerald-700 hover:text-emerald-900 font-semibold flex items-center gap-1 px-2 py-0.5 rounded-md hover:bg-emerald-50 border border-emerald-200/80 transition-colors shadow-2xs"
-                  >
-                    <Plus className="w-3 h-3" />
-                    <span>Add Skill</span>
-                  </button>
-                )}
-              </div>
-
-              {/* Inline Add Seeking Skill Form */}
-              {isAddingSeeking && (
-                <form onSubmit={handleAddSeekingSkill} className="mb-3 p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-2">
-                  <div className="text-xs font-semibold text-emerald-900">Add a skill you want to learn</div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={newSeekingName}
-                      onChange={(e) => setNewSeekingName(e.target.value)}
-                      placeholder="Skill name (e.g. AWS Cloud, Machine Learning, UI/UX, Public Speaking)"
-                      className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-emerald-300 bg-white text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
-                      autoFocus
-                    />
-                    <button
-                      type="submit"
-                      disabled={!newSeekingName.trim()}
-                      className="px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-lg shadow-xs transition-colors shrink-0"
-                    >
-                      Add
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsAddingSeeking(false);
-                        setNewSeekingName('');
-                      }}
-                      className="px-2.5 py-1.5 text-xs text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors shrink-0"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {user.skillsSeeking.length === 0 ? (
-                <div className="p-3 text-center text-xs text-slate-500 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-                  No learning goals listed yet. Click "+ Add Skill" to add skills you want to learn!
-                </div>
-              ) : (
-                <div className="flex flex-wrap gap-1.5">
-                  {user.skillsSeeking.map((seek) => (
-                    <span
-                      key={seek}
-                      className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs border border-emerald-200 flex items-center gap-1.5 group hover:border-emerald-300 transition-all"
-                    >
-                      <span className="font-medium">{seek}</span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveSeekingSkill(seek)}
-                        className="text-emerald-600 hover:text-rose-600 p-0.5 rounded-md hover:bg-emerald-100 transition-colors ml-0.5"
-                        title={`Remove ${seek}`}
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
+              ))}
             </div>
           </div>
 
-          {/* Verifiable Badges with 3D Symbolic Renderer */}
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-            <h2 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-              <Award className="w-4 h-4 text-sky-600" />
-              <span>Verified Proof-of-Skill Badges</span>
-            </h2>
-
+          {/* Certified Skills Offered */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+              <Award className="w-5 h-5 text-emerald-500" />
+              Verified Skills & Endorsements
+            </h3>
             <div className="space-y-2.5">
-              {user.badges.map((badge) => (
-                <SymbolicBadge key={badge.id} badge={badge} showDetails={true} />
+              {user.skillsOffered.map((s, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs"
+                >
+                  <div>
+                    <span className="font-bold text-slate-900 dark:text-white block">{s.name}</span>
+                    <span className="text-[10px] text-slate-400">{s.category} • Level: {s.level}</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold font-mono text-[10px]">
+                    ★ {s.endorsements} Endorsements
+                  </span>
+                </div>
               ))}
             </div>
           </div>
 
         </div>
 
-        {/* Right Column: Clean Barter Ledger */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between shadow-sm">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-bold text-slate-900">Campus Barter & Rupee Ledger</h2>
-              <span className="text-xs text-slate-500 font-mono">DynamoDB Log</span>
-            </div>
-
-            <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-              Every completed barter trade, deposit, and withdrawal is tracked in this immutable ledger:
-            </p>
-
-            <div className="space-y-2.5">
-              {transactions.map((tx) => {
-                const isEarned = tx.type === 'Earned' || tx.type === 'Welcome Bonus';
-                return (
-                  <div
-                    key={tx.id}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start justify-between gap-3 text-xs"
-                  >
-                    <div className="flex items-start gap-2">
-                      <div
-                        className={`p-1 rounded-md mt-0.5 ${
-                          isEarned ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
-                        }`}
-                      >
-                        {isEarned ? <ArrowDownLeft className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3" />}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-slate-900">{tx.description}</div>
-                        <div className="text-[10px] text-slate-500 mt-0.5">
-                          {tx.counterpart} • {tx.timestamp}
-                        </div>
-                      </div>
-                    </div>
-
-                    <span
-                      className={`font-mono text-xs font-bold shrink-0 ${
-                        isEarned ? 'text-emerald-700' : 'text-slate-700'
-                      }`}
-                    >
-                      {tx.amountRupees !== undefined && tx.amountRupees !== 0
-                        ? `${isEarned ? '+' : '-'}₹${Math.abs(tx.amountRupees)}`
-                        : `${isEarned ? '+1' : '-1'} Credit`}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+        {/* SECTION 3: CERTIFICATES & CREDENTIALS */}
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+              <FileCheck className="w-5 h-5 text-amber-500" />
+              Official Certificates & Verifiable Micro-Credentials ({user.certificates.length})
+            </h3>
+            <button
+              onClick={() => setIsAddCertOpen(true)}
+              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Add Certificate</span>
+            </button>
           </div>
 
-          <div className="mt-6 pt-3 border-t border-slate-100 text-[10px] text-slate-500 text-center">
-            Zero Platform Fees • Secured via Multi-Item DynamoDB Transactions
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {user.certificates.map((cert) => (
+              <div
+                key={cert.id}
+                className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-xs flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider block mb-1">
+                    Certified Credential
+                  </span>
+                  <p className="font-bold text-slate-900 dark:text-white leading-snug">{cert.title}</p>
+                  <p className="text-[11px] text-slate-500 mt-1">{cert.issuer} • Issued {cert.date}</p>
+                  <p className="text-[10px] text-slate-400 font-mono mt-2">ID: {cert.credentialId}</p>
+                </div>
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-slate-200/60 dark:border-slate-700">
+                  <span className="text-emerald-600 text-[10px] font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" />
+                    Verified Valid
+                  </span>
+                  <button
+                    onClick={() => removeCertificate(cert.id)}
+                    className="text-slate-400 hover:text-rose-500"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* SECTION 4: ENROLLED COURSES & ASSESSMENT PERFORMANCE */}
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+            <BookOpen className="w-5 h-5 text-indigo-500" />
+            Currently Enrolled Curricula ({userEnrolledCourses.length})
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {userEnrolledCourses.map((c) => (
+              <div
+                key={c.id}
+                className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 text-xs flex items-center justify-between"
+              >
+                <div>
+                  <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase">{c.subject}</span>
+                  <h4 className="font-bold text-slate-900 dark:text-white">{c.title}</h4>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Instructor: {c.trainerName} • {c.duration}</p>
+                </div>
+                <Link
+                  href="/courses"
+                  className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-[11px] hover:bg-amber-400 shrink-0"
+                >
+                  Continue →
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
 
       </div>
+
+      {/* MODAL: ADD QUALIFICATION */}
+      {isAddQualOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <button onClick={() => setIsAddQualOpen(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white mb-4">Add Academic Qualification</h3>
+            <form onSubmit={handleAddQual} className="space-y-3 text-xs">
+              <input
+                type="text"
+                required
+                placeholder="Degree (e.g. B.Tech Computer Science)"
+                value={qualDegree}
+                onChange={(e) => setQualDegree(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <input
+                type="text"
+                required
+                placeholder="University / Institution"
+                value={qualInstitution}
+                onChange={(e) => setQualInstitution(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="text"
+                  placeholder="Passing Years (e.g. 2023 - 2027)"
+                  value={qualYear}
+                  onChange={(e) => setQualYear(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                />
+                <input
+                  type="text"
+                  placeholder="CGPA or Grade (e.g. 8.9 / 10)"
+                  value={qualGrade}
+                  onChange={(e) => setQualGrade(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs mt-3 shadow-md"
+              >
+                Save Qualification to Profile
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: ADD WORK EXPERIENCE */}
+      {isAddExpOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <button onClick={() => setIsAddExpOpen(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white mb-4">Add Work Experience</h3>
+            <form onSubmit={handleAddExp} className="space-y-3 text-xs">
+              <input
+                type="text"
+                required
+                placeholder="Role / Title (e.g. Software Engineer Intern)"
+                value={expRole}
+                onChange={(e) => setExpRole(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <input
+                type="text"
+                required
+                placeholder="Company / Organization"
+                value={expOrg}
+                onChange={(e) => setExpOrg(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <input
+                type="text"
+                placeholder="Duration (e.g. May 2025 - Aug 2025)"
+                value={expDuration}
+                onChange={(e) => setExpDuration(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <textarea
+                rows={2}
+                placeholder="Key responsibilities and technical tools..."
+                value={expDesc}
+                onChange={(e) => setExpDesc(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              ></textarea>
+              <button
+                type="submit"
+                className="w-full py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs mt-3 shadow-md"
+              >
+                Save Experience to Profile
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: ADD CERTIFICATE */}
+      {isAddCertOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+            <button onClick={() => setIsAddCertOpen(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white mb-4">Add Certified Credential</h3>
+            <form onSubmit={handleAddCert} className="space-y-3 text-xs">
+              <input
+                type="text"
+                required
+                placeholder="Certificate Title (e.g. AWS Solutions Architect)"
+                value={certTitle}
+                onChange={(e) => setCertTitle(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <input
+                type="text"
+                required
+                placeholder="Issuing Organization (e.g. AWS, Coursera, NPTEL)"
+                value={certIssuer}
+                onChange={(e) => setCertIssuer(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="text"
+                  placeholder="Issue Date / Year"
+                  value={certDate}
+                  onChange={(e) => setCertDate(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                />
+                <input
+                  type="text"
+                  placeholder="Credential ID"
+                  value={certId}
+                  onChange={(e) => setCertId(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs mt-3 shadow-md"
+              >
+                Save Certificate
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
     </div>
   );

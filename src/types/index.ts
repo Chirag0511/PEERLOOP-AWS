@@ -1,10 +1,42 @@
+export type UserRole = 'trainee' | 'trainer' | 'admin';
+
+export type UserStatus = 'Approved' | 'Pending' | 'Rejected';
+
+export interface Qualification {
+  id: string;
+  degree: string;
+  institution: string;
+  year: string;
+  grade?: string;
+}
+
+export interface WorkExperience {
+  id: string;
+  role: string;
+  organization: string;
+  duration: string;
+  description: string;
+}
+
+export interface Certificate {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  credentialId: string;
+  verificationUrl?: string;
+}
+
 export type SkillCategory =
   | 'Design & Creative'
   | 'Music & Arts'
   | 'Languages & Communication'
   | 'Engineering & 3D'
   | 'Tech & Code'
-  | 'Academics & Analytics';
+  | 'Academics & Analytics'
+  | 'Cloud & DevOps'
+  | 'AI & Data Science'
+  | 'Cybersecurity & Governance';
 
 export interface Skill {
   name: string;
@@ -31,15 +63,160 @@ export interface Student {
   year: string;
   avatar: string;
   bio: string;
+  role: UserRole;
+  status: UserStatus;
+  organization?: string;
+  designation?: string;
+  qualifications: Qualification[];
+  workExperience: WorkExperience[];
+  interests: string[];
+  certificates: Certificate[];
+  enrolledCourseIds: string[];
   campusCredits: number;
   rupeeBalance: number; // in Indian Rupees (₹)
-  pricePerSessionInRupees: number; // e.g. 0 for 100% free barter, or 149
+  pricePerSessionInRupees: number;
   rating: number;
   totalSessions: number;
   isOnline: boolean;
   skillsOffered: Skill[];
   skillsSeeking: string[];
   badges: ProofBadge[];
+}
+
+export interface CourseModule {
+  id: string;
+  title: string;
+  duration: string;
+  lessonsCount: number;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  subject: string;
+  category: SkillCategory;
+  description: string;
+  trainerId: string;
+  trainerName: string;
+  trainerAvatar: string;
+  trainerRole?: string;
+  duration: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  thumbnail: string;
+  enrolledCount: number;
+  rating: number;
+  reviewsCount: number;
+  modules: CourseModule[];
+  learningOutcomes: string[];
+  prerequisites?: string[];
+  publishedAt: string;
+}
+
+export type MaterialType = 'Recorded Lecture' | 'Presentation' | 'Study Material';
+
+export interface TrainerMaterial {
+  id: string;
+  courseId?: string;
+  title: string;
+  subject: string;
+  type: MaterialType;
+  trainerId: string;
+  trainerName: string;
+  trainerAvatar?: string;
+  fileFormat: 'MP4' | 'PDF' | 'PPTX' | 'DOCX';
+  fileSize: string;
+  uploadDate: string;
+  durationOrPages: string;
+  resourceLink: string;
+  description: string;
+  downloadsCount: number;
+}
+
+export interface MCQQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswerIndex: number;
+  explanation: string;
+}
+
+export interface AssessmentQuestionnaire {
+  id: string;
+  courseId?: string;
+  title: string;
+  subject: string;
+  trainerId: string;
+  trainerName: string;
+  deadline: string;
+  timeLimitMinutes: number;
+  totalMarks: number;
+  passingMarks: number;
+  questions: MCQQuestion[];
+  totalSubmissionsCount: number;
+  averageScore: number;
+  status: 'Active' | 'Closed';
+  createdAt: string;
+}
+
+export interface AssessmentSubmission {
+  id: string;
+  assessmentId: string;
+  assessmentTitle: string;
+  subject: string;
+  traineeId: string;
+  traineeName: string;
+  traineeAvatar?: string;
+  score: number;
+  totalMarks: number;
+  percentage: number;
+  passed: boolean;
+  submittedAt: string;
+  answers: Record<string, number>;
+}
+
+export interface CourseFeedback {
+  id: string;
+  courseId: string;
+  courseTitle: string;
+  traineeId: string;
+  traineeName: string;
+  traineeAvatar: string;
+  rating: number;
+  contentQualityRating: number;
+  trainerDeliveryRating: number;
+  feedbackText: string;
+  date: string;
+}
+
+export type AnnouncementType = 'Announcement' | 'Achievement' | 'New Content' | 'Notification';
+
+export interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  category: AnnouncementType;
+  author: string;
+  authorRole: string;
+  publishedAt: string;
+  priority: 'High' | 'Normal';
+  badgeText?: string;
+  targetAudience: 'All' | 'Trainees' | 'Trainers';
+  actionUrl?: string;
+  actionText?: string;
+}
+
+export interface CompetencyMatch {
+  trainerId: string;
+  trainerName: string;
+  trainerAvatar: string;
+  qualification: string;
+  experienceYears: number;
+  suitabilityScore: number; // 0-100%
+  matchingSkills: string[];
+  recommendedSubjects: string[];
+  status: 'Recommended' | 'Primary Trainer' | 'Secondary Mentor';
+  activeCoursesCount: number;
+  trainerRating: number;
 }
 
 export type UrgencyLevel = 'Critical (Exam/Deadline)' | 'High' | 'Normal';
@@ -55,7 +232,7 @@ export interface SOSRequest {
   category: SkillCategory;
   urgency: UrgencyLevel;
   creditsReward: number;
-  bountyInRupees: number; // in Indian Rupees (₹)
+  bountyInRupees: number;
   createdAt: string;
   status: 'Open' | 'In-Progress' | 'Resolved';
   acceptedBy?: string;
@@ -95,22 +272,21 @@ export interface SessionData {
 
 export interface SemanticMatchResult {
   student: Student;
-  matchScore: number; // 0 to 100
+  matchScore: number;
   aiMatchReason: string;
   complementarySkills: string[];
 }
 
 export interface SolutionAuditResult {
   passed: boolean;
-  score: number; // 0 to 100
+  score: number;
   verdict: 'APPROVED' | 'REJECTED' | 'NEEDS_CLARIFICATION';
   feedback: string;
   clarificationQuestion?: string;
   criteriaScores: {
-    relevance: number; // /30
-    technicalAccuracy: number; // /30
-    completeness: number; // /25
-    clarity: number; // /15
+    relevance: number;
+    technicalAccuracy: number;
+    completeness: number;
+    clarity: number;
   };
 }
-
